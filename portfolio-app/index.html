@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO -->
+    <title>YASHAAS M | GenAI & Backend Engineer Portfolio</title>
+    <meta name="description" content="GenAI and Backend Engineer specializing in LLM multi-agent systems, RAG pipelines, ChromaDB, and scalable backend services. Portfolio of Yashaas M." />
+    <meta name="keywords" content="GenAI, Backend Engineer, Yashaas M, LangGraph, RAG, ChromaDB, FastAPI, Python, React, Three.js" />
+    <meta name="author" content="Yashaas M" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="YASHAAS M | GenAI & Backend Engineer" />
+    <meta property="og:description" content="Portfolio of Yashaas M, Associate Engineer specializing in LLMs, LangGraph, RAG pipelines, and backend development." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Prevent theme flash -->
+    <script>
+      (function() {
+        const saved = localStorage.getItem('portfolio-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

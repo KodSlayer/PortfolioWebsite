@@ -1,0 +1,147 @@
+/* ── Footer ── */
+.footer {
+  position: relative;
+  background: var(--inverse-surface);
+  color: var(--inverse-on-surface);
+  padding: 96px 0 48px;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .footer {
+  background: var(--surface-container-lowest);
+  border-top: 1px solid var(--outline-variant);
+}
+
+/* ── Background Pattern ── */
+.footer__bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.04) 1px, transparent 0);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+/* ── Inner ── */
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Label ── */
+.footer__label {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--primary-container);
+  font-weight: 700;
+}
+
+/* ── Email ── */
+.footer__email {
+  font-size: clamp(40px, 7vw, 96px);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  color: var(--inverse-on-surface);
+  text-decoration: none;
+  transition: color 0.35s ease;
+  word-break: break-all;
+}
+
+[data-theme="dark"] .footer__email {
+  color: var(--on-surface);
+}
+
+.footer__email:hover {
+  color: var(--primary-container);
+}
+
+/* ── Social Links ── */
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.footer__link {
+  padding: 8px 20px;
+  color: rgba(239, 241, 243, 0.65);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: var(--transition-base);
+}
+
+[data-theme="dark"] .footer__link {
+  color: var(--on-surface-variant);
+}
+
+.footer__link:hover {
+  color: var(--inverse-on-surface);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] .footer__link:hover {
+  color: var(--on-surface);
+  background: var(--surface-container);
+  border-color: var(--outline-variant);
+}
+
+/* ── Divider ── */
+.footer__divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .footer__divider {
+  background: var(--outline-variant);
+}
+
+/* ── Meta ── */
+.footer__meta {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer__meta-text {
+  font-size: 10px;
+  color: rgba(239, 241, 243, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+[data-theme="dark"] .footer__meta-text {
+  color: var(--on-surface-variant);
+  opacity: 0.5;
+}
+
+.footer__meta-tag {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--primary-container);
+  background: rgba(255, 255, 255, 0.07);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .footer__meta-tag {
+  background: rgba(0, 102, 255, 0.12);
+}
