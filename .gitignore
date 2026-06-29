@@ -2,8 +2,13 @@ stitch_immersive_genai_portfolio_studio/
 node_modules/
 
 venv/
-.env/
+venv*
+
+# Environment files
+.env
 .env.*
+*.env
+!*.env.example
 
 # Logs
 logs
