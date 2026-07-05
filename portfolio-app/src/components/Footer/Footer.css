@@ -3,7 +3,7 @@
   position: relative;
   background: var(--inverse-surface);
   color: var(--inverse-on-surface);
-  padding: 96px 0 48px;
+  padding: 48px 0 32px;
   overflow: hidden;
 }
 
@@ -26,7 +26,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
   text-align: center;
   position: relative;
   z-index: 1;
@@ -43,11 +43,11 @@
 
 /* ── Email ── */
 .footer__email {
-  font-size: clamp(40px, 7vw, 96px);
-  font-weight: 900;
+  font-size: clamp(24px, 4vw, 48px);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: -0.03em;
-  line-height: 0.9;
+  letter-spacing: -0.02em;
+  line-height: 1;
   color: var(--inverse-on-surface);
   text-decoration: none;
   transition: color 0.35s ease;
