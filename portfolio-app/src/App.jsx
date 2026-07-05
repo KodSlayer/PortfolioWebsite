@@ -8,6 +8,7 @@ import Projects from './components/Projects/Projects';
 import Playground from './components/Playground/Playground';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
+import ScrollCamera from './components/ScrollCamera/ScrollCamera';
 import './styles/index.css';
 import './App.css';
 
@@ -19,12 +20,12 @@ function AppContent() {
       {!loaded && <Loader onComplete={() => setLoaded(true)} />}
       <div className={`app-shell ${loaded ? 'app-shell--visible' : ''}`}>
         <Navbar />
-        <main>
+        <main className="scroll-camera-viewport">
           <Hero />
-          <About />
-          <Projects />
-          <Playground />
-          <Contact />
+          <ScrollCamera><About /></ScrollCamera>
+          <ScrollCamera><Projects /></ScrollCamera>
+          <ScrollCamera><Playground /></ScrollCamera>
+          <ScrollCamera><Contact /></ScrollCamera>
         </main>
         <Footer />
       </div>

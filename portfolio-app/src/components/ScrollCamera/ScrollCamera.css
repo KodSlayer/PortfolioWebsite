@@ -1,0 +1,7 @@
+/* ScrollCamera — no CSS transitions, JS drives every frame */
+.scroll-camera {
+  will-change: transform, opacity;
+  transform-origin: center top;
+  /* Perspective gives the scale a genuine depth feel */
+  perspective: 1400px;
+}

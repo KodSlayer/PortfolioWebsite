@@ -16,21 +16,36 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
+    // 1. Scroll state for Navbar background
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
-
-      // Active section detection
-      const sections = ['about', 'work', 'playground', 'contact'];
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el && window.scrollY >= el.offsetTop - 120) {
-          setActiveSection(sections[i]);
-          break;
-        }
-      }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // 2. IntersectionObserver for active section detection
+    // Using IntersectionObserver avoids the offsetTop bug caused by CSS transforms in ScrollCamera
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find the section that is most visible
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -60% 0px', threshold: 0 }
+    );
+
+    const sections = ['about', 'work', 'playground', 'contact'];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -39,19 +54,6 @@ export default function Navbar() {
       <a className="navbar__logo text-headline-md" href="#hero">
         <img src="/mylogo.png" alt="Logo" className="navbar__logo-image" />
       </a>
-
-      {/* Desktop Nav */}
-      <div className="navbar__links">
-        {NAV_LINKS.map(link => (
-          <a
-            key={link.href}
-            className={`navbar__link text-label-md ${activeSection === link.href.slice(1) ? 'navbar__link--active' : ''}`}
-            href={link.href}
-          >
-            {link.label.toUpperCase()}
-          </a>
-        ))}
-      </div>
 
       {/* Right Controls */}
       <div className="navbar__controls">
@@ -68,12 +70,7 @@ export default function Navbar() {
           </span>
         </button>
 
-        {/* CTA */}
-        <a className="navbar__cta text-label-md" href="#contact">
-          HIRE ME
-        </a>
-
-        {/* Mobile Hamburger */}
+        {/* Hamburger Toggle */}
         <button
           className={`navbar__hamburger ${menuOpen ? 'navbar__hamburger--open' : ''}`}
           onClick={() => setMenuOpen(p => !p)}
@@ -84,25 +81,18 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      <div className={`navbar__mobile-menu ${menuOpen ? 'navbar__mobile-menu--open' : ''}`}>
+      {/* Dropdown Menu */}
+      <div className={`navbar__dropdown-menu ${menuOpen ? 'navbar__dropdown-menu--open' : ''}`}>
         {NAV_LINKS.map(link => (
           <a
             key={link.href}
-            className="navbar__mobile-link text-label-md"
+            className={`navbar__dropdown-link text-label-md ${activeSection === link.href.slice(1) ? 'navbar__dropdown-link--active' : ''}`}
             href={link.href}
             onClick={() => setMenuOpen(false)}
           >
             {link.label.toUpperCase()}
           </a>
         ))}
-        <a
-          className="navbar__mobile-cta text-label-md"
-          href="#contact"
-          onClick={() => setMenuOpen(false)}
-        >
-          HIRE ME
-        </a>
       </div>
     </nav>
   );

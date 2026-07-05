@@ -53,7 +53,7 @@ export default function About() {
               <div className="about__photo-glow" />
               <div className="about__photo-border">
                 <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGYi8bK5NvdFO0Ovyauw0QLk1GHWAMUJWIrEg8ALZbvgwNTSQrBM2d6d0fWbefGU5tSnM_znuMKmH42I3C5Snfjt16POui1hLg0swwd220WfJIrHB1KzD0pd3vFAPwBbNNR45FkvVNCL3MviXaf_n9ytpBSoIhFP1H9tknKz7Ds-oad8OxLMO7TKyNw_w88Cl45weGclFF11VFPIcu4gxPNBTv22hldkec0rKZrA5nygZx9bqmx_nbqoZngR1FE9u3I_UWDo2MPHA"
+                  src="/My professional image.jpeg"
                   alt="Professional Headshot"
                   className="about__photo"
                 />

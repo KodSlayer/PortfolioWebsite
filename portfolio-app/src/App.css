@@ -18,3 +18,9 @@
   width: 100%;
   min-height: 100vh;
 }
+
+/* ── Scroll Camera Viewport ── */
+.scroll-camera-viewport {
+  perspective: 1600px;
+  perspective-origin: 50% 0%;
+}
