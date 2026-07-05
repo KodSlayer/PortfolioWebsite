@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Reveal.css';
 
-export default function Reveal({ children, delay = 0, direction = 'up', threshold = 0.1 }) {
+/**
+ * Reveal — cinematic scroll-triggered transition wrapper.
+ * directions: 'up' | 'down' | 'left' | 'right' | 'wipe-down' | 'wipe-up' | 'slice' | 'scale'
+ */
+export default function Reveal({ children, delay = 0, direction = 'up', threshold = 0.08 }) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
 
@@ -13,7 +17,7 @@ export default function Reveal({ children, delay = 0, direction = 'up', threshol
           observer.unobserve(entry.target);
         }
       },
-      { threshold, rootMargin: '0px 0px -50px 0px' }
+      { threshold, rootMargin: '0px 0px -40px 0px' }
     );
 
     if (ref.current) {

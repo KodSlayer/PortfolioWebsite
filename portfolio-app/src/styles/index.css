@@ -237,25 +237,75 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-weight: 500;
 }
 
-/* ── Glassmorphism ── */
+/* ── Glassmorphism (light panels) ── */
 .glass-panel {
-  background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.92) 100%);
+  background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: var(--shadow-glass);
+  border: 1px solid rgba(0, 102, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
   transition: var(--transition-base);
 }
 
 [data-theme="dark"] .glass-panel {
-  background: linear-gradient(135deg, rgba(20,24,40,0.75) 0%, rgba(15,18,30,0.92) 100%);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(8, 12, 35, 0.6);
+  border: 1px solid rgba(0, 209, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .glass-panel:hover {
-  border-color: rgba(0, 102, 255, 0.25);
-  box-shadow: var(--shadow-glass-hover);
+  border-color: rgba(0, 102, 255, 0.3);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 102, 255, 0.06);
   transform: translateY(-3px);
+}
+
+[data-theme="dark"] .glass-panel:hover {
+  border-color: rgba(0, 209, 255, 0.35);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 0 24px rgba(0, 209, 255, 0.08);
+}
+
+/* ── Glass Card (Reference Image Style — dark frosted) ── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 209, 255, 0.22);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: var(--transition-base);
+}
+
+[data-theme="dark"] .glass-card {
+  background: rgba(6, 10, 26, 0.65);
+  border-color: rgba(0, 209, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.glass-card:hover {
+  border-color: rgba(0, 209, 255, 0.45);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.14), 0 0 24px rgba(0, 209, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+[data-theme="dark"] .glass-card:hover {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), 0 0 28px rgba(0, 209, 255, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ── Section Background Gradients ── */
+.section-bg {
+  background: linear-gradient(180deg, #f0f4ff 0%, #eaf0fe 100%);
+}
+
+.section-bg-alt {
+  background: linear-gradient(180deg, #e8f0fe 0%, #f0f8ff 100%);
+}
+
+[data-theme="dark"] .section-bg {
+  background: linear-gradient(180deg, #07091a 0%, #0a0f24 100%);
+}
+
+[data-theme="dark"] .section-bg-alt {
+  background: linear-gradient(180deg, #060a18 0%, #080d1e 100%);
 }
 
 /* ── Brutalist ── */

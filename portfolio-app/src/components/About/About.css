@@ -3,6 +3,11 @@
   padding: 120px 0;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(180deg, #f0f4ff 0%, #e8f0fe 100%);
+}
+
+[data-theme="dark"] .about {
+  background: linear-gradient(180deg, #07091a 0%, #0a0f24 100%);
 }
 
 /* ── Section Label ── */
@@ -95,6 +100,17 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 209, 255, 0.22);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .about__status-card {
+  background: rgba(6, 10, 26, 0.65);
+  border-color: rgba(0, 209, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .about__status-header {
@@ -228,6 +244,23 @@
   flex-direction: column;
   gap: 6px;
   cursor: default;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 209, 255, 0.18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: var(--transition-base);
+}
+
+[data-theme="dark"] .about__tech-badge {
+  background: rgba(6, 10, 26, 0.6);
+  border-color: rgba(0, 209, 255, 0.18);
+}
+
+.about__tech-badge:hover {
+  border-color: rgba(0, 209, 255, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 0 16px rgba(0, 209, 255, 0.08);
 }
 
 .about__tech-label {
@@ -291,6 +324,23 @@
   flex-direction: column;
   gap: 12px;
   transition: var(--transition-base);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 209, 255, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .about__method-card {
+  background: rgba(6, 10, 26, 0.6);
+  border-color: rgba(0, 209, 255, 0.16);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.about__method-card:hover {
+  border-color: rgba(0, 209, 255, 0.4);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 0 20px rgba(0, 209, 255, 0.07);
+  transform: translateY(-3px);
 }
 
 .about__method-card--wide {

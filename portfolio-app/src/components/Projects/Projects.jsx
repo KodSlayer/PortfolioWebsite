@@ -54,7 +54,7 @@ export default function Projects() {
   return (
     <section className="projects" id="work">
       {/* Header */}
-      <Reveal direction="up">
+      <Reveal direction="slice">
         <div className="container">
           <div className="projects__header">
             <div>
@@ -87,7 +87,7 @@ export default function Projects() {
       </Reveal>
 
       {/* Horizontal scroll */}
-      <Reveal direction="up" delay={0.2}>
+      <Reveal direction="left" delay={0.15}>
         <div className="projects__scroll-track hide-scrollbar" ref={scrollRef}>
           <div className="projects__scroll-inner">
             {PROJECTS.map(project => (

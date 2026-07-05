@@ -92,6 +92,103 @@ export default function Hero() {
         scene.add(lines);
       }
 
+      // ── Lightning System ──
+      const pulseGeo = new THREE.SphereGeometry(0.12, 10, 10);
+      const activePulses = [];
+      let lastSpawnTime = 0;
+
+      function getNeighborNodes(nodeIdx) {
+        const pos = points.geometry.attributes.position.array;
+        const neighbors = [];
+        for (let j = 0; j < particleCount; j++) {
+          if (j === nodeIdx) continue;
+          const dx = pos[nodeIdx * 3] - pos[j * 3];
+          const dy = pos[nodeIdx * 3 + 1] - pos[j * 3 + 1];
+          const dz = pos[nodeIdx * 3 + 2] - pos[j * 3 + 2];
+          if (Math.sqrt(dx * dx + dy * dy + dz * dz) < maxDist) {
+            neighbors.push(j);
+          }
+        }
+        return neighbors;
+      }
+
+      function addPulse(fromNode, toNode, hopsLeft) {
+        if (hopsLeft <= 0) return;
+        const mat = new THREE.MeshBasicMaterial({
+          color: isDark ? 0xffffff : 0x2266ff,
+          transparent: true,
+          opacity: 1.0,
+          blending: THREE.AdditiveBlending,
+        });
+        const orb = new THREE.Mesh(pulseGeo, mat);
+        // Add a point-light-like glow halo
+        const haloGeo = new THREE.SphereGeometry(0.22, 10, 10);
+        const haloMat = new THREE.MeshBasicMaterial({
+          color: isDark ? 0x00ddff : 0x0044ff,
+          transparent: true,
+          opacity: 0.35,
+          blending: THREE.AdditiveBlending,
+        });
+        const halo = new THREE.Mesh(haloGeo, haloMat);
+        orb.add(halo);
+        scene.add(orb);
+        activePulses.push({ fromNode, toNode, progress: 0, hopsLeft, orb, haloMat });
+      }
+
+      function spawnChain(startNode, hopsLeft = 7) {
+        const neighbors = getNeighborNodes(startNode);
+        if (neighbors.length === 0) return;
+        const toNode = neighbors[Math.floor(Math.random() * neighbors.length)];
+        addPulse(startNode, toNode, hopsLeft);
+      }
+
+      function updateLightning(t) {
+        // Spawn a new chain every ~1.5s
+        if (t - lastSpawnTime > 1500) {
+          lastSpawnTime = t;
+          const startNode = Math.floor(Math.random() * particleCount);
+          spawnChain(startNode, 7);
+          // Sometimes spawn a second simultaneous chain
+          if (Math.random() > 0.5) {
+            setTimeout(() => spawnChain(Math.floor(Math.random() * particleCount), 5), 400);
+          }
+        }
+
+        const pos = points.geometry.attributes.position.array;
+        for (let i = activePulses.length - 1; i >= 0; i--) {
+          const p = activePulses[i];
+          p.progress += 0.038;
+
+          const sx = pos[p.fromNode * 3], sy = pos[p.fromNode * 3 + 1], sz = pos[p.fromNode * 3 + 2];
+          const ex = pos[p.toNode * 3], ey = pos[p.toNode * 3 + 1], ez = pos[p.toNode * 3 + 2];
+
+          if (p.progress >= 1) {
+            scene.remove(p.orb);
+            p.orb.material.dispose();
+            if (p.haloMat) p.haloMat.dispose();
+            activePulses.splice(i, 1);
+            // Continue chain from the arrived node
+            if (p.hopsLeft > 1) {
+              const neighbors = getNeighborNodes(p.toNode);
+              if (neighbors.length > 0) {
+                const nextNode = neighbors[Math.floor(Math.random() * neighbors.length)];
+                addPulse(p.toNode, nextNode, p.hopsLeft - 1);
+              }
+            }
+          } else {
+            p.orb.position.set(
+              sx + (ex - sx) * p.progress,
+              sy + (ey - sy) * p.progress,
+              sz + (ez - sz) * p.progress,
+            );
+            // Bright full opacity for most of the hop, sharp fade at end
+            const fade = p.progress < 0.75 ? 1 : 1 - ((p.progress - 0.75) / 0.25);
+            p.orb.material.opacity = fade;
+            if (p.haloMat) p.haloMat.opacity = fade * 0.35;
+          }
+        }
+      }
+
       const mouse = new THREE.Vector2();
       window.addEventListener('mousemove', (e) => {
         mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -114,6 +211,7 @@ export default function Hero() {
         camera.lookAt(scene.position);
 
         updateConnections();
+        updateLightning(t);
         renderer.render(scene, camera);
       }
 
@@ -130,6 +228,13 @@ export default function Hero() {
       sceneRef.current.cleanup = () => {
         cancelAnimationFrame(animId);
         window.removeEventListener('resize', handleResize);
+        // Clean up all active lightning pulses
+        activePulses.forEach(p => {
+          scene.remove(p.orb);
+          p.orb.material.dispose();
+          if (p.haloMat) p.haloMat.dispose();
+        });
+        activePulses.length = 0;
         renderer.dispose();
         if (container.contains(renderer.domElement)) container.removeChild(renderer.domElement);
       };
@@ -143,42 +248,29 @@ export default function Hero() {
 
   return (
     <section className="hero" id="hero">
+      {/* Glassmorphic background orbs */}
+      <div className="hero__orb hero__orb--1" />
+      <div className="hero__orb hero__orb--2" />
+      <div className="hero__orb hero__orb--3" />
+
       {/* Three.js canvas */}
       <div className="hero__canvas" ref={canvasRef} />
 
       {/* Content */}
       <div className="hero__content">
-        <div className="hero__badge text-label-sm">
-          <span className="hero__badge-dot" />
-          Available for Work // Chennai, India
-        </div>
 
         <h1 className="hero__title text-display-lg">
           Hi, I'm <br />
           <span className="gradient-text">Yashaas M</span>
         </h1>
 
-        <p className="hero__desc text-body-lg">
-          Associate Engineer building intelligent backend systems & multi-agent AI pipelines.
-          I turn complex problems into scalable, production-ready solutions with Python,
-          LangGraph, FastAPI, and ChromaDB.
-        </p>
-
-        <div className="hero__cta-group">
-          <a className="btn-primary" href="#work">
-            VIEW MY WORK
-            <span className="material-symbols-outlined" style={{ fontSize: 18 }}>arrow_forward</span>
-          </a>
-          <a className="btn-secondary" href="#about">
-            ABOUT ME
-          </a>
+        <div className="hero__summary-wrapper">
+          <p className="hero__desc">
+            I build intelligent backend systems & multi-agent AI pipelines —
+            turning complex engineering problems into scalable, production-ready solutions.
+          </p>
         </div>
-      </div>
 
-      {/* Scroll Indicator */}
-      <div className="hero__scroll">
-        <span className="text-label-sm hero__scroll-text">SCROLL DOWN</span>
-        <div className="hero__scroll-line" />
       </div>
     </section>
   );

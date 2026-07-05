@@ -224,7 +224,7 @@ export default function Playground() {
 
   return (
     <section className="playground" id="playground">
-      <Reveal direction="up" threshold={0.05}>
+      <Reveal direction="wipe-down" threshold={0.05}>
         <div className="container">
           {/* Header */}
           <div className="playground__header">

@@ -1,26 +1,61 @@
+/* ── Base ── */
 .reveal {
   opacity: 0;
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: opacity, transform;
 }
 
+/* ── Slide Up (default) ── */
 .reveal--up {
-  transform: translateY(40px);
+  transform: translateY(48px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ── Slide Down ── */
 .reveal--down {
-  transform: translateY(-40px);
+  transform: translateY(-48px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ── Horizontal slide from right (cinematic) ── */
 .reveal--left {
-  transform: translateX(40px);
+  transform: translateX(-64px) skewX(-4deg);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ── Horizontal slide from left (cinematic) ── */
 .reveal--right {
-  transform: translateX(-40px);
+  transform: translateX(64px) skewX(4deg);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ── Curtain drop from top ── */
+.reveal--wipe-down {
+  transform: translateY(-56px) scaleY(0.96);
+  transform-origin: top center;
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Curtain rise from bottom ── */
+.reveal--wipe-up {
+  transform: translateY(56px) scaleY(0.96);
+  transform-origin: bottom center;
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Diagonal slice (film-cut feel) ── */
+.reveal--slice {
+  transform: translateX(-48px) skewY(-2deg);
+  transition: opacity 0.92s cubic-bezier(0.16, 1, 0.3, 1), transform 0.92s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Scale + Fade (cards, grids) ── */
+.reveal--scale {
+  transform: scale(0.88) translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Visible state — all variants reset ── */
 .reveal--visible {
   opacity: 1;
-  transform: translate(0, 0);
+  transform: translate(0, 0) scale(1) skew(0deg, 0deg);
 }
