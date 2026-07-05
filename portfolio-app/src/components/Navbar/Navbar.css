@@ -9,24 +9,28 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 48px;
-  background: rgba(247, 249, 251, 0.75);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: transparent;
+  border-bottom: 1px solid transparent;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [data-theme="dark"] .navbar {
-  background: rgba(13, 15, 20, 0.85);
-  border-bottom-color: rgba(255, 255, 255, 0.06);
+  background: transparent;
+  border-bottom-color: transparent;
 }
 
 .navbar--scrolled {
   padding: 12px 48px;
+  background: rgba(247, 249, 251, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom-color: rgba(0, 0, 0, 0.05);
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
 }
 
 [data-theme="dark"] .navbar--scrolled {
+  background: rgba(13, 15, 20, 0.85);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
 }
 
@@ -44,13 +48,11 @@
   flex-shrink: 0;
 }
 
-.navbar__logo-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--primary-container);
-  animation: pulse-glow 2s infinite;
+.navbar__logo-image {
+  width: 48px;
+  height: 48px;
   flex-shrink: 0;
+  /* Optional: animation: pulse-glow 2s infinite; */
 }
 
 .navbar__logo-accent {

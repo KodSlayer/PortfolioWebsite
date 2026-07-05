@@ -37,8 +37,7 @@ export default function Navbar() {
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`} id="navbar">
       {/* Logo */}
       <a className="navbar__logo text-headline-md" href="#hero">
-        <span className="navbar__logo-dot" />
-        YASHAAS<span className="navbar__logo-accent">.M</span>
+        <img src="/mylogo.png" alt="Logo" className="navbar__logo-image" />
       </a>
 
       {/* Desktop Nav */}
