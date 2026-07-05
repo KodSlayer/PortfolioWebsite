@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../../contexts/ThemeContext';
+import Reveal from '../Reveal/Reveal';
 import './Playground.css';
 
 export default function Playground() {
@@ -223,63 +224,65 @@ export default function Playground() {
 
   return (
     <section className="playground" id="playground">
-      <div className="container">
-        {/* Header */}
-        <div className="playground__header">
-          <div className="playground__header-tag glass-panel">
-            <span className="text-label-sm playground__header-label">03 // PLAYGROUND</span>
-            <h2 className="text-display-md playground__header-title">
-              THE<br /><span style={{ color: 'var(--primary-container)' }}>PLAYGROUND</span>
-            </h2>
-          </div>
-          <p className="text-body-md playground__header-desc">
-            My digital garden. Test physics engines, shader logic, and generative kernels.
-            <br />
-            <strong>WASD</strong> to drive · <strong>Click</strong> to spawn shapes · <strong>Shift</strong> for turbo
-          </p>
-        </div>
-
-        {/* Terminal */}
-        <div className="playground__terminal">
-          {/* Terminal chrome */}
-          <div className="playground__terminal-chrome">
-            <div className="playground__dots">
-              <div className="playground__dot playground__dot--red" />
-              <div className="playground__dot playground__dot--yellow" />
-              <div className="playground__dot playground__dot--green" />
+      <Reveal direction="up" threshold={0.05}>
+        <div className="container">
+          {/* Header */}
+          <div className="playground__header">
+            <div className="playground__header-tag glass-panel">
+              <span className="text-label-sm playground__header-label">03 // PLAYGROUND</span>
+              <h2 className="text-display-md playground__header-title">
+                THE<br /><span style={{ color: 'var(--primary-container)' }}>PLAYGROUND</span>
+              </h2>
             </div>
-            <span className="text-label-sm playground__terminal-title">
-              yashaas@portfolio:~/playground
-            </span>
-            <div className="playground__terminal-status">
-              <span className="playground__terminal-dot" />
-              <span className="text-label-sm">ENGINE_ACTIVE</span>
-            </div>
+            <p className="text-body-md playground__header-desc">
+              My digital garden. Test physics engines, shader logic, and generative kernels.
+              <br />
+              <strong>WASD</strong> to drive · <strong>Click</strong> to spawn shapes · <strong>Shift</strong> for turbo
+            </p>
           </div>
 
-          {/* Canvas */}
-          <div className="playground__canvas-wrap">
-            <div className="playground__canvas" ref={canvasRef} />
-
-            {/* Log overlay */}
-            <div className="playground__log" ref={logRef}>
-              <div className="playground__log-header text-label-sm">
-                [SYSTEM_LOG]
+          {/* Terminal */}
+          <div className="playground__terminal">
+            {/* Terminal chrome */}
+            <div className="playground__terminal-chrome">
+              <div className="playground__dots">
+                <div className="playground__dot playground__dot--red" />
+                <div className="playground__dot playground__dot--yellow" />
+                <div className="playground__dot playground__dot--green" />
+              </div>
+              <span className="text-label-sm playground__terminal-title">
+                yashaas@portfolio:~/playground
+              </span>
+              <div className="playground__terminal-status">
+                <span className="playground__terminal-dot" />
+                <span className="text-label-sm">ENGINE_ACTIVE</span>
               </div>
             </div>
 
-            {/* Controls overlay */}
-            <div className="playground__controls-hint">
-              <span className="playground__key text-label-sm">W/A/S/D</span>
-              <span className="text-label-sm playground__controls-sep">MOVE</span>
-              <span className="playground__key text-label-sm">CLICK</span>
-              <span className="text-label-sm playground__controls-sep">SPAWN</span>
-              <span className="playground__key text-label-sm">SHIFT</span>
-              <span className="text-label-sm playground__controls-sep">TURBO</span>
+            {/* Canvas */}
+            <div className="playground__canvas-wrap">
+              <div className="playground__canvas" ref={canvasRef} />
+
+              {/* Log overlay */}
+              <div className="playground__log" ref={logRef}>
+                <div className="playground__log-header text-label-sm">
+                  [SYSTEM_LOG]
+                </div>
+              </div>
+
+              {/* Controls overlay */}
+              <div className="playground__controls-hint">
+                <span className="playground__key text-label-sm">W/A/S/D</span>
+                <span className="text-label-sm playground__controls-sep">MOVE</span>
+                <span className="playground__key text-label-sm">CLICK</span>
+                <span className="text-label-sm playground__controls-sep">SPAWN</span>
+                <span className="playground__key text-label-sm">SHIFT</span>
+                <span className="text-label-sm playground__controls-sep">TURBO</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

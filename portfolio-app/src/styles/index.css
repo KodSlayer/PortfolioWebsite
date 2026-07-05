@@ -3,7 +3,7 @@
    Stitched from Home, About, Night, Connection, Loading_theme
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Inter:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300..900&family=Inter:wght@300..900&family=JetBrains+Mono:wght@100..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
 /* ── Design Tokens: Light Mode ── */
@@ -75,9 +75,9 @@
   --container-max: 1280px;
 
   /* Typography */
-  --font-display: 'Archivo Narrow', sans-serif;
-  --font-headline: 'Archivo Narrow', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  --font-headline: 'Outfit', sans-serif;
+  --font-body: 'Outfit', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Radius */

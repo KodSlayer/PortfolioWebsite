@@ -155,7 +155,7 @@ export default function Hero() {
 
         <h1 className="hero__title text-display-lg">
           Hi, I'm <br />
-          <span className="gradient-text">YASHAAS M</span>
+          <span className="gradient-text">Yashaas M</span>
         </h1>
 
         <p className="hero__desc text-body-lg">

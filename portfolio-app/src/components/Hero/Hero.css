@@ -71,7 +71,6 @@
   line-height: 0.88;
   letter-spacing: -0.03em;
   color: var(--on-surface);
-  text-transform: uppercase;
   font-weight: 900;
   margin: 0;
   animation: fade-in-up 0.8s ease both;

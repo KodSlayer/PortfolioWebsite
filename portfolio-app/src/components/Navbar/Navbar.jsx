@@ -55,7 +55,6 @@ export default function Navbar() {
 
       {/* Right Controls */}
       <div className="navbar__controls">
-        <span className="navbar__version text-label-sm">Portfolio v1.0</span>
 
         {/* Theme Toggle */}
         <button

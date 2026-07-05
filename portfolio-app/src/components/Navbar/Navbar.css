@@ -49,8 +49,8 @@
 }
 
 .navbar__logo-image {
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
   flex-shrink: 0;
   /* Optional: animation: pulse-glow 2s infinite; */
 }

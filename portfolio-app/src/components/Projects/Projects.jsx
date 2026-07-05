@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import Reveal from '../Reveal/Reveal';
 import './Projects.css';
 
 const PROJECTS = [
@@ -53,95 +54,99 @@ export default function Projects() {
   return (
     <section className="projects" id="work">
       {/* Header */}
-      <div className="container">
-        <div className="projects__header">
-          <div>
-            <span className="projects__eyebrow text-label-sm">02 // MY PROJECTS</span>
-            <h2 className="projects__title text-headline-lg">
-              Selected Work.
-              <span className="projects__title-cursor text-label-sm" />
-            </h2>
-          </div>
-          <div className="projects__nav-btns">
-            <button
-              className="projects__nav-btn"
-              onClick={() => scroll(-1)}
-              aria-label="Previous project"
-              id="projects-prev-btn"
-            >
-              <span className="material-symbols-outlined">arrow_back</span>
-            </button>
-            <button
-              className="projects__nav-btn"
-              onClick={() => scroll(1)}
-              aria-label="Next project"
-              id="projects-next-btn"
-            >
-              <span className="material-symbols-outlined">arrow_forward</span>
-            </button>
+      <Reveal direction="up">
+        <div className="container">
+          <div className="projects__header">
+            <div>
+              <span className="projects__eyebrow text-label-sm">02 // MY PROJECTS</span>
+              <h2 className="projects__title text-headline-lg">
+                Selected Work.
+                <span className="projects__title-cursor text-label-sm" />
+              </h2>
+            </div>
+            <div className="projects__nav-btns">
+              <button
+                className="projects__nav-btn"
+                onClick={() => scroll(-1)}
+                aria-label="Previous project"
+                id="projects-prev-btn"
+              >
+                <span className="material-symbols-outlined">arrow_back</span>
+              </button>
+              <button
+                className="projects__nav-btn"
+                onClick={() => scroll(1)}
+                aria-label="Next project"
+                id="projects-next-btn"
+              >
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </Reveal>
 
       {/* Horizontal scroll */}
-      <div className="projects__scroll-track hide-scrollbar" ref={scrollRef}>
-        <div className="projects__scroll-inner">
-          {PROJECTS.map(project => (
-            <article className="project-card" key={project.id}>
-              {/* Background image */}
-              <div
-                className="project-card__img"
-                style={{ backgroundImage: `url(${project.image})` }}
-              />
-              {/* Gradient overlay */}
-              <div className="project-card__overlay" />
+      <Reveal direction="up" delay={0.2}>
+        <div className="projects__scroll-track hide-scrollbar" ref={scrollRef}>
+          <div className="projects__scroll-inner">
+            {PROJECTS.map(project => (
+              <article className="project-card" key={project.id}>
+                {/* Background image */}
+                <div
+                  className="project-card__img"
+                  style={{ backgroundImage: `url(${project.image})` }}
+                />
+                {/* Gradient overlay */}
+                <div className="project-card__overlay" />
 
-              {/* Top badges */}
-              <div className="project-card__top">
-                <span className={`project-card__status project-card__status--${project.statusColor} text-label-sm`}>
-                  <span className="project-card__status-dot" />
-                  {project.status}
-                </span>
-                <span className="project-card__version text-label-sm">{project.version}</span>
-              </div>
-
-              {/* Bottom content */}
-              <div className="project-card__bottom">
-                <div className="project-card__meta">
-                  <span className="project-card__num text-label-md" style={{ color: project.accentColor }}>
-                    {project.id}
+                {/* Top badges */}
+                <div className="project-card__top">
+                  <span className={`project-card__status project-card__status--${project.statusColor} text-label-sm`}>
+                    <span className="project-card__status-dot" />
+                    {project.status}
                   </span>
-                  <div className="project-card__meta-line" style={{ background: project.accentColor }} />
-                  <span className="project-card__cat text-label-sm">{project.category}</span>
+                  <span className="project-card__version text-label-sm">{project.version}</span>
                 </div>
 
-                <h3 className="project-card__title text-headline-lg">{project.title}</h3>
+                {/* Bottom content */}
+                <div className="project-card__bottom">
+                  <div className="project-card__meta">
+                    <span className="project-card__num text-label-md" style={{ color: project.accentColor }}>
+                      {project.id}
+                    </span>
+                    <div className="project-card__meta-line" style={{ background: project.accentColor }} />
+                    <span className="project-card__cat text-label-sm">{project.category}</span>
+                  </div>
 
-                <div className="project-card__specs text-label-sm">
-                  {project.specs.map((s, i) => (
-                    <React.Fragment key={s}>
-                      <span>{s}</span>
-                      {i < project.specs.length - 1 && <span className="project-card__sep">|</span>}
-                    </React.Fragment>
-                  ))}
+                  <h3 className="project-card__title text-headline-lg">{project.title}</h3>
+
+                  <div className="project-card__specs text-label-sm">
+                    {project.specs.map((s, i) => (
+                      <React.Fragment key={s}>
+                        <span>{s}</span>
+                        {i < project.specs.length - 1 && <span className="project-card__sep">|</span>}
+                      </React.Fragment>
+                    ))}
+                  </div>
+
+                  <p className="project-card__desc text-body-md">{project.desc}</p>
+
+                  <div className="project-card__actions">
+                    <button className="project-card__btn text-label-sm">
+                      VIEW_PROJECT
+                      <span className="material-symbols-outlined" style={{ fontSize: 16 }}>north_east</span>
+                    </button>
+                    <button className="project-card__btn project-card__btn--ghost text-label-sm">
+                      GITHUB
+                    </button>
+                  </div>
                 </div>
-
-                <p className="project-card__desc text-body-md">{project.desc}</p>
-
-                <div className="project-card__actions">
-                  <button className="project-card__btn text-label-sm">
-                    VIEW_PROJECT
-                    <span className="material-symbols-outlined" style={{ fontSize: 16 }}>north_east</span>
-                  </button>
-                  <button className="project-card__btn project-card__btn--ghost text-label-sm">
-                    GITHUB
-                  </button>
-                </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
