@@ -4,6 +4,7 @@ import Loader from './components/Loader/Loader';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
+import Certifications from './components/Certifications/Certifications';
 import Projects from './components/Projects/Projects';
 import Playground from './components/Playground/Playground';
 import Contact from './components/Contact/Contact';
@@ -23,6 +24,7 @@ function AppContent() {
         <main className="scroll-camera-viewport">
           <Hero />
           <ScrollCamera><About /></ScrollCamera>
+          <ScrollCamera><Certifications /></ScrollCamera>
           <ScrollCamera><Projects /></ScrollCamera>
           <ScrollCamera><Playground /></ScrollCamera>
           <ScrollCamera><Contact /></ScrollCamera>
