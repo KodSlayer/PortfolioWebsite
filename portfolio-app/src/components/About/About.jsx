@@ -107,7 +107,7 @@ export default function About() {
                   <span className="about-b__status-val">AI & RAG ENABLED SYSTEMS</span>
                 </div>
                 <div className="about-b__status-row">
-                  <span className="about-b__status-key">ARCHITECTURE</span>
+                  <span className="about-b__status-key">ARCHITECTURE plan</span>
                   <span className="about-b__status-val">MULTI-AGENT WORKFLOWS</span>
                 </div>
               </div>
