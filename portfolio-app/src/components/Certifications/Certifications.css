@@ -1,0 +1,303 @@
+/* ── Certifications Section ── */
+.certifications {
+  padding: 60px 0 80px;
+  background: var(--surface);
+  color: var(--on-surface);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Header ── */
+.cert__header {
+  margin-bottom: 16px;
+}
+
+.cert__section-title-card {
+  display: inline-block;
+  background: var(--primary-container);
+  color: var(--on-surface);
+  border: 4px solid var(--on-surface);
+  padding: 16px 32px;
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: 8px 8px 0 var(--on-surface);
+  transform: rotate(-1deg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 24px;
+}
+
+.cert__section-title-card:hover {
+  transform: rotate(0deg) translate(-2px, -2px);
+  box-shadow: 12px 12px 0 var(--on-surface);
+}
+
+.cert__subtitle {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 20px;
+}
+
+/* ── Animation ── */
+.cert__animate {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cert__animate--in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Grid ── */
+.cert__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-top: 48px;
+}
+
+@media (min-width: 640px) {
+  .cert__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .cert__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Card ── */
+.cert__card {
+  background: var(--surface-container-lowest);
+  border: 4px solid var(--on-surface);
+  box-shadow: 8px 8px 0 var(--primary-container);
+  transform: rotate(var(--rotation, 0deg));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .cert__card {
+  background: var(--surface-container);
+}
+
+.cert__card:hover {
+  transform: rotate(0deg) translate(-4px, -4px);
+  box-shadow: 12px 12px 0 var(--primary-container);
+}
+
+/* ── Badge Area ── */
+.cert__badge-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-bottom: 4px solid var(--on-surface);
+  background: var(--surface-container);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+[data-theme="dark"] .cert__badge-wrap {
+  background: var(--surface-container-high);
+}
+
+.cert__card:hover .cert__badge-wrap {
+  background: var(--surface-container-high);
+}
+
+.cert__badge-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.4) contrast(1.1);
+  transition: filter 0.3s ease, transform 0.4s ease;
+}
+
+.cert__card:hover .cert__badge-img {
+  filter: grayscale(0) contrast(1.05);
+  transform: scale(1.03);
+}
+
+/* ── Placeholder Badge ── */
+.cert__badge-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.cert__badge-icon {
+  font-size: 36px;
+  color: var(--primary-container);
+  line-height: 1;
+}
+
+.cert__badge-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--on-surface-variant);
+  letter-spacing: 0.2em;
+}
+
+/* ── Card Body ── */
+.cert__card-body {
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}
+
+/* ── Meta row ── */
+.cert__card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cert__card-id {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--primary-container);
+}
+
+.cert__card-meta-line {
+  flex: 1;
+  height: 2px;
+  background: var(--on-surface);
+  max-width: 28px;
+}
+
+.cert__card-date {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--on-surface-variant);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Title ── */
+.cert__card-title {
+  font-family: var(--font-headline);
+  font-size: clamp(16px, 2vw, 19px);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: var(--on-surface);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+/* ── Issuer ── */
+.cert__card-issuer {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--on-surface-variant);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Credential ID ── */
+.cert__card-cred {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: 2px solid var(--on-surface);
+  margin-top: 2px;
+}
+
+[data-theme="dark"] .cert__card-cred {
+  background: #111;
+  border-color: #333;
+}
+
+.cert__cred-key {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 900;
+  color: var(--on-surface-variant);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.cert__cred-val {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--on-surface);
+  letter-spacing: 0.08em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Verify Button ── */
+.cert__verify-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  margin-top: auto;
+  padding: 10px 16px;
+  background: var(--on-surface);
+  color: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid var(--on-surface);
+  box-shadow: 4px 4px 0 var(--primary-container);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+[data-theme="dark"] .cert__verify-btn {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+.cert__verify-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--primary-container);
+}
+
+.cert__btn-arrow {
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+.cert__verify-btn:hover .cert__btn-arrow {
+  transform: translateX(3px);
+}
+
+/* ── Responsive tweaks ── */
+@media (max-width: 640px) {
+  .cert__section-title-card {
+    font-size: 22px;
+    padding: 12px 20px;
+  }
+}

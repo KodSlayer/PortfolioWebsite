@@ -34,8 +34,10 @@ export default function Contact() {
   };
 
   return (
-    <section className="contact tech-grid" id="contact">
+    <section className="contact" id="contact">
       <div className="container">
+        {/* Section Title */}
+        <div className="contact__section-title-card">GET IN TOUCH</div>
         <div className="contact__grid">
           {/* ── Left: Context ── */}
           <Reveal direction="left" delay={0.1}>
@@ -50,7 +52,7 @@ export default function Contact() {
               </p>
 
               {/* Status Indicator */}
-              <div className="glass-panel contact__status">
+              <div className="contact__status">
                 <div className="contact__status-dot">
                   <div className="contact__status-pulse" />
                   <div className="contact__status-inner" />
@@ -68,7 +70,7 @@ export default function Contact() {
                   {SOCIAL_LINKS.map(link => (
                     <a
                       key={link.label}
-                      className="contact__channel-link glass-panel"
+                      className="contact__channel-link"
                       href={link.href}
                       id={`social-${link.label.toLowerCase().replace(/[\s()]/g, '-')}-link`}
                     >
@@ -87,7 +89,7 @@ export default function Contact() {
           {/* ── Right: Form ── */}
           <Reveal direction="right" delay={0.2}>
             <div className="contact__right">
-              <div className="contact__form-card glass-panel">
+              <div className="contact__form-card">
                 <form className="contact__form" onSubmit={handleSubmit} id="connection-form">
                   {/* Name + Email */}
                   <div className="contact__form-row">

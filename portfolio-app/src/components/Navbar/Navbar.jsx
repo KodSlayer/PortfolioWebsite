@@ -4,6 +4,7 @@ import './Navbar.css';
 
 const NAV_LINKS = [
   { label: 'About', href: '#about' },
+  { label: 'Certifications', href: '#certifications' },
   { label: 'Projects', href: '#work' },
   { label: 'Playground', href: '#playground' },
   { label: 'Contact', href: '#contact' },
@@ -36,7 +37,7 @@ export default function Navbar() {
       { rootMargin: '-20% 0px -60% 0px', threshold: 0 }
     );
 
-    const sections = ['about', 'work', 'playground', 'contact'];
+    const sections = ['about', 'certifications', 'work', 'playground', 'contact'];
     sections.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
