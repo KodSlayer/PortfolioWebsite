@@ -13,7 +13,7 @@ export default function Footer() {
       <div className="footer__bg-pattern" />
 
       <div className="container footer__inner">
-        <div className="footer__label text-label-sm">END_OF_TRANSMISSION</div>
+        <div className="footer__label text-label-sm"></div>
 
         <a
           className="footer__email text-display-lg"
