@@ -40,10 +40,7 @@ export default function Footer() {
 
         <div className="footer__meta">
           <span className="text-label-sm footer__meta-text">
-            © 2026 YASHAAS M. Built with passion in Chennai.
-          </span>
-          <span className="text-label-sm footer__meta-tag">
-            BE CSE // CHANNABASAVESHWARA INSTITUTE OF TECHNOLOGY
+            © 2026 YASHAAS M. Built with passion.
           </span>
         </div>
       </div>
