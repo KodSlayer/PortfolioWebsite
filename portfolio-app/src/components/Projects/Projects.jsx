@@ -57,29 +57,28 @@ export default function Projects() {
       <Reveal direction="slice">
         <div className="container">
           <div className="projects__header">
-              <div>
-                <span className="projects__eyebrow">03 // MY PROJECTS</span>
-                <h2 className="projects__title-card">SELECTED WORK.</h2>
-              </div>
-              <div className="projects__nav-btns">
-                <button
-                  className="projects__nav-btn"
-                  onClick={() => scroll(-1)}
-                  aria-label="Previous project"
-                  id="projects-prev-btn"
-                >
-                  <span className="material-symbols-outlined">arrow_back</span>
-                </button>
-                <button
-                  className="projects__nav-btn"
-                  onClick={() => scroll(1)}
-                  aria-label="Next project"
-                  id="projects-next-btn"
-                >
-                  <span className="material-symbols-outlined">arrow_forward</span>
-                </button>
-              </div>
+            <div>
+              <h2 className="projects__title-card">MY PROJECTS.</h2>
             </div>
+            <div className="projects__nav-btns">
+              <button
+                className="projects__nav-btn"
+                onClick={() => scroll(-1)}
+                aria-label="Previous project"
+                id="projects-prev-btn"
+              >
+                <span className="material-symbols-outlined">arrow_back</span>
+              </button>
+              <button
+                className="projects__nav-btn"
+                onClick={() => scroll(1)}
+                aria-label="Next project"
+                id="projects-next-btn"
+              >
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </button>
+            </div>
+          </div>
         </div>
       </Reveal>
 

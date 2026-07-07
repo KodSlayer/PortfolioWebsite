@@ -49,25 +49,25 @@ export default function ScrollCamera({ children }) {
         return;
       }
 
-      const ENTRY = 0.13;  // 0–13%: zoom in from depth
-      const EXIT  = 0.82;  // 82–100%: recede into depth
+      const ENTRY = 0.15;  // 0–15%: zoom in from depth
+      const EXIT  = 0.80;  // 80–100%: recede into depth
 
       let scale, opacity, ty;
 
       if (rawP < ENTRY) {
         const t = easeOut(rawP / ENTRY);
-        scale   = 0.92 + t * 0.08;
+        scale   = 0.88 + t * 0.12;   // starts smaller for more drama
         opacity = t;
-        ty      = (1 - t) * 56;
+        ty      = (1 - t) * 80;      // bigger translate = more movement
       } else if (rawP < EXIT) {
         scale   = 1;
         opacity = 1;
         ty      = 0;
       } else {
         const t = easeIn((rawP - EXIT) / (1 - EXIT));
-        scale   = 1 - t * 0.055;
-        opacity = 1 - t * 0.28;
-        ty      = -t * 20;
+        scale   = 1 - t * 0.07;     // recede more noticeably
+        opacity = 1 - t * 0.35;
+        ty      = -t * 30;
       }
 
       el.style.opacity   = opacity.toFixed(4);

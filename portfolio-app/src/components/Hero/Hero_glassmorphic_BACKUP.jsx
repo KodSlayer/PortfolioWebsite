@@ -1,8 +1,19 @@
+/**
+ * BACKUP: Original Hero Section — Glassmorphic Theme with Three.js Particle Network
+ * Saved: 2026-07-08
+ * Purpose: For reuse in another project (glassmorphic aesthetic).
+ *
+ * Dependencies:
+ *  - three (npm package, already installed)
+ *  - ThemeContext (../../contexts/ThemeContext)
+ *  - Hero.css (original version saved below this file as Hero_glassmorphic.css)
+ */
+
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../../contexts/ThemeContext';
-import './Hero.css';
+// import './Hero_glassmorphic.css'; // Use the glassmorphic CSS backup
 
-export default function Hero() {
+export default function HeroGlassmorphic() {
   const { isDark } = useTheme();
   const canvasRef = useRef(null);
   const sceneRef = useRef({});
@@ -27,33 +38,33 @@ export default function Hero() {
       container.appendChild(renderer.domElement);
       sceneRef.current.renderer = renderer;
 
-      // Particle network — brutalist palette
+      // Particle network
       const particleCount = 180;
       const geometry = new THREE.BufferGeometry();
       const positions = new Float32Array(particleCount * 3);
       const colors = new Float32Array(particleCount * 3);
 
-      const c1 = new THREE.Color(isDark ? 0xffffff : 0x000000);
-      const c2 = new THREE.Color(isDark ? 0x0066ff : 0x0066ff);
+      const c1 = new THREE.Color(isDark ? 0x0088FF : 0x0066FF);
+      const c2 = new THREE.Color(isDark ? 0x00FFFF : 0x00D1FF);
 
       for (let i = 0; i < particleCount; i++) {
-        positions[i * 3]     = (Math.random() - 0.5) * 18;
+        positions[i * 3] = (Math.random() - 0.5) * 18;
         positions[i * 3 + 1] = (Math.random() - 0.5) * 12;
         positions[i * 3 + 2] = (Math.random() - 0.5) * 12;
         const mix = Math.random();
-        colors[i * 3]     = THREE.MathUtils.lerp(c1.r, c2.r, mix);
+        colors[i * 3] = THREE.MathUtils.lerp(c1.r, c2.r, mix);
         colors[i * 3 + 1] = THREE.MathUtils.lerp(c1.g, c2.g, mix);
         colors[i * 3 + 2] = THREE.MathUtils.lerp(c1.b, c2.b, mix);
       }
 
       geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      geometry.setAttribute('color',    new THREE.BufferAttribute(colors,    3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
       const material = new THREE.PointsMaterial({
-        size: isDark ? 0.12 : 0.08,
+        size: isDark ? 0.15 : 0.1,
         vertexColors: true,
         transparent: true,
-        opacity: isDark ? 0.9 : 0.55,
+        opacity: isDark ? 0.9 : 0.7,
         blending: THREE.AdditiveBlending,
       });
 
@@ -63,9 +74,9 @@ export default function Hero() {
 
       // Connection lines
       const lineMaterial = new THREE.LineBasicMaterial({
-        color: isDark ? 0x0066FF : 0x191c1e,
+        color: isDark ? 0x0088FF : 0x0066FF,
         transparent: true,
-        opacity: isDark ? 0.4 : 0.12,
+        opacity: isDark ? 0.35 : 0.18,
       });
 
       let lines;
@@ -92,7 +103,7 @@ export default function Hero() {
         scene.add(lines);
       }
 
-      // Lightning System
+      // ── Lightning System ──
       const pulseGeo = new THREE.SphereGeometry(0.12, 10, 10);
       const activePulses = [];
       let lastSpawnTime = 0;
@@ -105,7 +116,9 @@ export default function Hero() {
           const dx = pos[nodeIdx * 3] - pos[j * 3];
           const dy = pos[nodeIdx * 3 + 1] - pos[j * 3 + 1];
           const dz = pos[nodeIdx * 3 + 2] - pos[j * 3 + 2];
-          if (Math.sqrt(dx * dx + dy * dy + dz * dz) < maxDist) neighbors.push(j);
+          if (Math.sqrt(dx * dx + dy * dy + dz * dz) < maxDist) {
+            neighbors.push(j);
+          }
         }
         return neighbors;
       }
@@ -113,7 +126,7 @@ export default function Hero() {
       function addPulse(fromNode, toNode, hopsLeft) {
         if (hopsLeft <= 0) return;
         const mat = new THREE.MeshBasicMaterial({
-          color: isDark ? 0x00d1ff : 0x0066ff,
+          color: isDark ? 0xffffff : 0x2266ff,
           transparent: true,
           opacity: 1.0,
           blending: THREE.AdditiveBlending,
@@ -121,9 +134,9 @@ export default function Hero() {
         const orb = new THREE.Mesh(pulseGeo, mat);
         const haloGeo = new THREE.SphereGeometry(0.22, 10, 10);
         const haloMat = new THREE.MeshBasicMaterial({
-          color: isDark ? 0x0066ff : 0x000000,
+          color: isDark ? 0x00ddff : 0x0044ff,
           transparent: true,
-          opacity: 0.3,
+          opacity: 0.35,
           blending: THREE.AdditiveBlending,
         });
         const halo = new THREE.Mesh(haloGeo, haloMat);
@@ -142,17 +155,21 @@ export default function Hero() {
       function updateLightning(t) {
         if (t - lastSpawnTime > 1500) {
           lastSpawnTime = t;
-          spawnChain(Math.floor(Math.random() * particleCount), 7);
+          const startNode = Math.floor(Math.random() * particleCount);
+          spawnChain(startNode, 7);
           if (Math.random() > 0.5) {
             setTimeout(() => spawnChain(Math.floor(Math.random() * particleCount), 5), 400);
           }
         }
+
         const pos = points.geometry.attributes.position.array;
         for (let i = activePulses.length - 1; i >= 0; i--) {
           const p = activePulses[i];
           p.progress += 0.038;
+
           const sx = pos[p.fromNode * 3], sy = pos[p.fromNode * 3 + 1], sz = pos[p.fromNode * 3 + 2];
-          const ex = pos[p.toNode * 3],   ey = pos[p.toNode * 3 + 1],   ez = pos[p.toNode * 3 + 2];
+          const ex = pos[p.toNode * 3], ey = pos[p.toNode * 3 + 1], ez = pos[p.toNode * 3 + 2];
+
           if (p.progress >= 1) {
             scene.remove(p.orb);
             p.orb.material.dispose();
@@ -161,25 +178,26 @@ export default function Hero() {
             if (p.hopsLeft > 1) {
               const neighbors = getNeighborNodes(p.toNode);
               if (neighbors.length > 0) {
-                addPulse(p.toNode, neighbors[Math.floor(Math.random() * neighbors.length)], p.hopsLeft - 1);
+                const nextNode = neighbors[Math.floor(Math.random() * neighbors.length)];
+                addPulse(p.toNode, nextNode, p.hopsLeft - 1);
               }
             }
           } else {
-            const fade = p.progress < 0.75 ? 1 : 1 - ((p.progress - 0.75) / 0.25);
-            p.orb.material.opacity = fade;
-            if (p.haloMat) p.haloMat.opacity = fade * 0.3;
             p.orb.position.set(
               sx + (ex - sx) * p.progress,
               sy + (ey - sy) * p.progress,
               sz + (ez - sz) * p.progress,
             );
+            const fade = p.progress < 0.75 ? 1 : 1 - ((p.progress - 0.75) / 0.25);
+            p.orb.material.opacity = fade;
+            if (p.haloMat) p.haloMat.opacity = fade * 0.35;
           }
         }
       }
 
       const mouse = new THREE.Vector2();
       window.addEventListener('mousemove', (e) => {
-        mouse.x =  (e.clientX / window.innerWidth)  * 2 - 1;
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       });
 
@@ -187,14 +205,17 @@ export default function Hero() {
         animId = requestAnimationFrame(animate);
         points.rotation.y += 0.0008;
         points.rotation.x += 0.0004;
+
         const pos = points.geometry.attributes.position.array;
         for (let i = 0; i < particleCount; i++) {
           pos[i * 3 + 1] += Math.sin(t * 0.001 + pos[i * 3]) * 0.001;
         }
         points.geometry.attributes.position.needsUpdate = true;
+
         camera.position.x += (mouse.x * 2 - camera.position.x) * 0.04;
         camera.position.y += (-mouse.y * 2 - camera.position.y) * 0.04;
         camera.lookAt(scene.position);
+
         updateConnections();
         updateLightning(t);
         renderer.render(scene, camera);
@@ -232,70 +253,129 @@ export default function Hero() {
 
   return (
     <section className="hero" id="hero">
+      {/* Glassmorphic background orbs */}
+      <div className="hero__orb hero__orb--1" />
+      <div className="hero__orb hero__orb--2" />
+      <div className="hero__orb hero__orb--3" />
+
       {/* Three.js canvas */}
       <div className="hero__canvas" ref={canvasRef} />
 
-      <div className="hero__inner container">
-        {/* Left content column */}
-        <div className="hero__content">
+      {/* Content */}
+      <div className="hero__content">
 
-          {/* Build badge */}
-          <div className="hero__badge">
-            <span>[ STABLE_BUILD // V2.4_BRUTALIST ]</span>
-          </div>
+        <h1 className="hero__title text-display-lg">
+          Hi, I'm <br />
+          <span className="gradient-text">Yashaas M</span>
+        </h1>
 
-          {/* Stacked title blocks */}
-          <h1 className="hero__title">
-            <span className="hero__title-line hero__title-line--label">HELLO, I AM</span>
-            <span className="hero__title-line hero__title-line--block">YASHAAS M.</span>
-            <span className="hero__title-line hero__title-line--outline">ENGINEER</span>
-            <span className="hero__title-line hero__title-line--accent">&amp; AI BUILDER.</span>
-          </h1>
-
-          {/* Manifesto block */}
-          <div className="hero__manifesto">
-            <span className="hero__manifesto-eyebrow">01 // THE_MANIFESTO</span>
-            <p className="hero__manifesto-text">
-              Associate Engineer. Backend Systems &amp; Multi-Agent AI Pipelines.
-              Turning complex engineering problems into scalable, production-ready solutions.
-            </p>
-            <div className="hero__name-block">
-              — YASHAAS M. // ASSOCIATE ENGINEER
-            </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="hero__cta">
-            <a href="#work" className="hero__btn hero__btn--primary" id="hero-view-work-btn">VIEW WORK</a>
-            <a href="#contact" className="hero__btn hero__btn--ghost" id="hero-contact-btn">GET IN TOUCH →</a>
-          </div>
+        <div className="hero__summary-wrapper">
+          <p className="hero__desc">
+            I build intelligent backend systems &amp; multi-agent AI pipelines —
+            turning complex engineering problems into scalable, production-ready solutions.
+          </p>
         </div>
 
-        {/* Right floating status card */}
-        <div className="hero__status-card">
-          <div className="hero__status-label">CORE_ENGINE_V2</div>
-          <div className="hero__status-items">
-            <div className="hero__status-item">
-              <span className="hero__status-dot hero__status-dot--on" />
-              BACKEND — ACTIVE
-            </div>
-            <div className="hero__status-item">
-              <span className="hero__status-dot hero__status-dot--on" />
-              AI_PIPELINE — RUNNING
-            </div>
-            <div className="hero__status-item">
-              <span className="hero__status-dot hero__status-dot--idle" />
-              CLOUD — STANDBY
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll cue */}
-      <div className="hero__scroll">
-        <span className="hero__scroll-text">SCROLL</span>
-        <div className="hero__scroll-line" />
       </div>
     </section>
   );
 }
+
+/*
+ * ── ORIGINAL Hero.css (Glassmorphic) ──
+ * Paste the following into a file named Hero_glassmorphic.css for the other project:
+
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #e8f0fe 0%, #f0f8ff 40%, #e8f4fd 70%, #f5e6ff 100%);
+  padding-top: 80px;
+}
+
+[data-theme="dark"] .hero {
+  background: linear-gradient(135deg, #060a18 0%, #0a0f24 40%, #080e20 70%, #0e0818 100%);
+}
+
+.hero__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+  animation: float 8s ease-in-out infinite;
+}
+
+.hero__orb--1 {
+  width: 500px; height: 500px;
+  top: -100px; left: -100px;
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.18) 0%, rgba(0, 102, 255, 0) 70%);
+  animation-delay: 0s;
+}
+
+.hero__orb--2 {
+  width: 600px; height: 600px;
+  bottom: -150px; right: -100px;
+  background: radial-gradient(circle, rgba(0, 209, 255, 0.15) 0%, rgba(0, 209, 255, 0) 70%);
+  animation-delay: -3s;
+}
+
+.hero__orb--3 {
+  width: 400px; height: 400px;
+  top: 30%; left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(120, 80, 255, 0.1) 0%, rgba(120, 80, 255, 0) 70%);
+  animation-delay: -5s;
+}
+
+[data-theme="dark"] .hero__orb--1 {
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.3) 0%, rgba(0, 102, 255, 0) 70%);
+}
+[data-theme="dark"] .hero__orb--2 {
+  background: radial-gradient(circle, rgba(0, 209, 255, 0.25) 0%, rgba(0, 209, 255, 0) 70%);
+}
+[data-theme="dark"] .hero__orb--3 {
+  background: radial-gradient(circle, rgba(120, 80, 255, 0.2) 0%, rgba(120, 80, 255, 0) 70%);
+}
+
+.hero__canvas {
+  position: absolute; inset: 0; z-index: 1; mix-blend-mode: normal;
+}
+
+.hero__content {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  max-width: 900px; padding: 0 24px; gap: 28px;
+}
+
+.hero__title {
+  font-size: clamp(52px, 9vw, 100px);
+  line-height: 0.88; letter-spacing: -0.03em;
+  color: var(--on-surface); font-weight: 900; margin: 0;
+  animation: fade-in-up 0.8s ease both;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #0066ff, #00d1ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero__summary-wrapper {
+  text-align: center; max-width: 600px;
+  animation: fade-in-up 0.8s 0.15s ease both;
+  margin-top: 16px; padding: 0 16px;
+}
+
+.hero__desc {
+  color: var(--on-surface); font-size: 16px;
+  line-height: 1.6; font-weight: 700; margin: 0;
+  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
+}
+*/

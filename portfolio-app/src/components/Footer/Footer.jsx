@@ -1,10 +1,14 @@
 import React from 'react';
+import { FaInstagram, FaFacebook, FaTwitter, FaWhatsapp, FaGithub, FaLinkedin } from 'react-icons/fa';
 import './Footer.css';
 
 const SOCIAL_LINKS = [
-  { label: 'GITHUB', href: 'https://github.com/KodSlayer' },
-  { label: 'LINKEDIN', href: 'https://www.linkedin.com/in/yashaas-m-267108324/' },
-  { label: 'EMAIL', href: 'mailto:yashasteshi08@gmail.com' },
+  { label: 'GITHUB', icon: <FaGithub size={24} />, href: 'https://github.com/KodSlayer' },
+  { label: 'LINKEDIN', icon: <FaLinkedin size={24} />, href: 'https://www.linkedin.com/in/yashaas-m-267108324/' },
+  { label: 'INSTAGRAM', icon: <FaInstagram size={24} />, href: '#' },
+  { label: 'FACEBOOK', icon: <FaFacebook size={24} />, href: '#' },
+  { label: 'TWITTER', icon: <FaTwitter size={24} />, href: '#' },
+  { label: 'WHATSAPP', icon: <FaWhatsapp size={24} />, href: '#' },
 ];
 
 export default function Footer() {
@@ -29,9 +33,12 @@ export default function Footer() {
               key={link.label}
               className="footer__link text-label-md"
               href={link.href}
+              title={link.label}
+              target="_blank"
+              rel="noreferrer"
               id={`footer-${link.label.toLowerCase()}-link`}
             >
-              {link.label}
+              {link.icon}
             </a>
           ))}
         </div>
