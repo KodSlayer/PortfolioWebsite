@@ -15,16 +15,18 @@
 }
 
 .navbar--scrolled {
-  padding: 12px 48px;
-  background: var(--surface);
-  border-bottom: 3px solid var(--on-surface);
-  box-shadow: 0 4px 0 var(--primary-container);
+  padding: 8px 48px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="dark"] .navbar--scrolled {
-  background: #0a0a0a;
-  border-bottom-color: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 4px 0 var(--primary-container);
+  background: rgba(10, 10, 10, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* ── Logo ── */
@@ -45,6 +47,12 @@
   width: 64px;
   height: 64px;
   flex-shrink: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar--scrolled .navbar__logo-image {
+  width: 40px;
+  height: 40px;
 }
 
 /* ── Controls ── */
@@ -192,8 +200,8 @@
 
 /* Responsive adjustments */
 @media (max-width: 767px) {
-  .navbar { padding: 16px 20px; }
-  .navbar--scrolled { padding: 12px 20px; }
+  .navbar { padding: 12px 20px; }
+  .navbar--scrolled { padding: 8px 20px; }
   .navbar__dropdown-menu {
     right: 20px;
     top: 64px;
