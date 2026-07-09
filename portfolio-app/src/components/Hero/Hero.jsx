@@ -37,17 +37,17 @@ export default function Hero() {
       const c2 = new THREE.Color(isDark ? 0x0066ff : 0x0066ff);
 
       for (let i = 0; i < particleCount; i++) {
-        positions[i * 3]     = (Math.random() - 0.5) * 18;
+        positions[i * 3] = (Math.random() - 0.5) * 18;
         positions[i * 3 + 1] = (Math.random() - 0.5) * 12;
         positions[i * 3 + 2] = (Math.random() - 0.5) * 12;
         const mix = Math.random();
-        colors[i * 3]     = THREE.MathUtils.lerp(c1.r, c2.r, mix);
+        colors[i * 3] = THREE.MathUtils.lerp(c1.r, c2.r, mix);
         colors[i * 3 + 1] = THREE.MathUtils.lerp(c1.g, c2.g, mix);
         colors[i * 3 + 2] = THREE.MathUtils.lerp(c1.b, c2.b, mix);
       }
 
       geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      geometry.setAttribute('color',    new THREE.BufferAttribute(colors,    3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
       const material = new THREE.PointsMaterial({
         size: isDark ? 0.12 : 0.08,
@@ -152,7 +152,7 @@ export default function Hero() {
           const p = activePulses[i];
           p.progress += 0.038;
           const sx = pos[p.fromNode * 3], sy = pos[p.fromNode * 3 + 1], sz = pos[p.fromNode * 3 + 2];
-          const ex = pos[p.toNode * 3],   ey = pos[p.toNode * 3 + 1],   ez = pos[p.toNode * 3 + 2];
+          const ex = pos[p.toNode * 3], ey = pos[p.toNode * 3 + 1], ez = pos[p.toNode * 3 + 2];
           if (p.progress >= 1) {
             scene.remove(p.orb);
             p.orb.material.dispose();
@@ -179,7 +179,7 @@ export default function Hero() {
 
       const mouse = new THREE.Vector2();
       window.addEventListener('mousemove', (e) => {
-        mouse.x =  (e.clientX / window.innerWidth)  * 2 - 1;
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       });
 
@@ -239,11 +239,7 @@ export default function Hero() {
         {/* Left content column */}
         <div className="hero__content">
 
-          {/* Build badge */}
-          <div className="hero__badge">
-            <span>[ STABLE_BUILD // V2.4_BRUTALIST ]</span>
-          </div>
-
+          <span>  </span>
           {/* Stacked title blocks */}
           <h1 className="hero__title">
             <span className="hero__title-line hero__title-line--label">HELLO, I AM</span>
@@ -254,41 +250,13 @@ export default function Hero() {
 
           {/* Manifesto block */}
           <div className="hero__manifesto">
-            <span className="hero__manifesto-eyebrow">01 // THE_MANIFESTO</span>
             <p className="hero__manifesto-text">
-              Associate Engineer. Backend Systems &amp; Multi-Agent AI Pipelines.
-              Turning complex engineering problems into scalable, production-ready solutions.
+              I build intelligent backend systems &amp; multi-agent AI pipelines —
+              turning complex engineering problems into scalable, production-ready solutions.
             </p>
-            <div className="hero__name-block">
-              — YASHAAS M. // ASSOCIATE ENGINEER
-            </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="hero__cta">
-            <a href="#work" className="hero__btn hero__btn--primary" id="hero-view-work-btn">VIEW WORK</a>
-            <a href="#contact" className="hero__btn hero__btn--ghost" id="hero-contact-btn">GET IN TOUCH →</a>
           </div>
         </div>
 
-        {/* Right floating status card */}
-        <div className="hero__status-card">
-          <div className="hero__status-label">CORE_ENGINE_V2</div>
-          <div className="hero__status-items">
-            <div className="hero__status-item">
-              <span className="hero__status-dot hero__status-dot--on" />
-              BACKEND — ACTIVE
-            </div>
-            <div className="hero__status-item">
-              <span className="hero__status-dot hero__status-dot--on" />
-              AI_PIPELINE — RUNNING
-            </div>
-            <div className="hero__status-item">
-              <span className="hero__status-dot hero__status-dot--idle" />
-              CLOUD — STANDBY
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Scroll cue */}
