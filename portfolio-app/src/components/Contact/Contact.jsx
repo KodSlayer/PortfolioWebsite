@@ -42,7 +42,6 @@ export default function Contact() {
           {/* ── Left: Context ── */}
           <Reveal direction="left" delay={0.1}>
             <div className="contact__left">
-              <span className="contact__eyebrow text-label-sm">04 // GET IN TOUCH</span>
               <h2 className="text-display-md contact__title">
                 LET'S WORK<br />TOGETHER.
               </h2>
@@ -59,7 +58,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-label-md contact__status-label">Availability</p>
-                  <p className="text-label-sm contact__status-value">OPEN TO WORK // Chennai, India</p>
+                  <p className="text-label-sm contact__status-value">OPEN TO WORK </p>
                 </div>
               </div>
 
@@ -101,7 +100,7 @@ export default function Contact() {
                         className="contact__input"
                         id="client_id"
                         type="text"
-                        placeholder="John Doe"
+                        placeholder="Your Name"
                         required
                       />
                     </div>
@@ -177,22 +176,6 @@ export default function Contact() {
                     )}
                   </button>
                 </form>
-
-                {/* Tech Meta */}
-                <div className="contact__form-meta">
-                  <div className="contact__meta-item">
-                    <p className="text-label-sm contact__meta-key">Encryption</p>
-                    <p className="text-label-md contact__meta-val">AES-256 E2EE</p>
-                  </div>
-                  <div className="contact__meta-item">
-                    <p className="text-label-sm contact__meta-key">Response Time</p>
-                    <p className="text-label-md contact__meta-val">&lt; 12.0 Hours</p>
-                  </div>
-                  <div className="contact__meta-item">
-                    <p className="text-label-sm contact__meta-key">Protocol</p>
-                    <p className="text-label-md contact__meta-val">HTTPS / E2E</p>
-                  </div>
-                </div>
               </div>
             </div>
           </Reveal>
