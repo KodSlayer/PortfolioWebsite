@@ -80,10 +80,11 @@
 .hero__title-line--label {
   font-size: clamp(14px, 1.8vw, 22px);
   font-weight: 700;
-  color: var(--primary-container);
+  color: transparent;
+  -webkit-text-stroke: 0.5px var(--on-surface);
   letter-spacing: 0.2em;
-  font-family: var(--font-mono);
-  margin-bottom: 8px;
+  font-family: var(--font-display);
+  margin-bottom: 10px;
 }
 
 /* Filled black block — NAME */
@@ -287,9 +288,11 @@
   .hero__inner {
     grid-template-columns: 1fr;
   }
+
   .hero__status-card {
     display: none;
   }
+
   .hero__title-line {
     font-size: clamp(40px, 10vw, 64px);
   }
