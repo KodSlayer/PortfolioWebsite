@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FaInstagram, FaFacebook, FaTwitter, FaWhatsapp, FaGithub, FaLinkedin } from 'react-icons/fa';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import './Footer.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const SOCIAL_LINKS = [
   { label: 'GITHUB', icon: <FaGithub size={24} />, href: 'https://github.com/KodSlayer' },
@@ -12,8 +16,55 @@ const SOCIAL_LINKS = [
 ];
 
 export default function Footer() {
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Fade upward for main text
+      gsap.fromTo(
+        ['.footer__label', '.footer__email', '.footer__meta'],
+        { y: 50, opacity: 0 },
+        {
+          scrollTrigger: {
+            trigger: '.footer',
+            start: 'top 90%',
+            once: true,
+          },
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.2,
+          ease: 'power3.out',
+          clearProps: 'all'
+        }
+      );
+
+      // Bounce for icons
+      gsap.fromTo(
+        '.footer__link',
+        { y: 50, opacity: 0, scale: 0.8 },
+        {
+          scrollTrigger: {
+            trigger: '.footer',
+            start: 'top 85%',
+            once: true,
+          },
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'back.out(1.7)',
+          clearProps: 'all'
+        }
+      );
+    }, footerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <footer className="footer" id="footer">
+    <footer className="footer" id="footer" ref={footerRef}>
       <div className="footer__bg-pattern" />
 
       <div className="container footer__inner">

@@ -1,5 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import './About.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const TECH_STACK = [
   'Python', 'Java', 'FastAPI', 'LangGraph', 'AutoGen', 'LangChain',
@@ -16,21 +20,31 @@ export default function About() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.about__animate').forEach((el, i) => {
-              el.style.transitionDelay = `${i * 0.1}s`;
-              el.classList.add('about__animate--in');
-            });
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    const ctx = gsap.context(() => {
+      // Find all elements with about__animate class
+      const elements = sectionRef.current.querySelectorAll('.about__animate');
+      
+      // Set initial state
+      gsap.set(elements, { opacity: 0, y: 32 });
+
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top 75%',
+        once: true,
+        onEnter: () => {
+          gsap.to(elements, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.1,
+            ease: 'expo.out',
+            clearProps: 'all'
+          });
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (

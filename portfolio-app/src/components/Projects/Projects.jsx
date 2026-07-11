@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
 import Reveal from '../Reveal/Reveal';
 import './Projects.css';
 
@@ -50,6 +51,29 @@ export default function Projects() {
       scrollRef.current.scrollBy({ left: dir * (cardWidth + 32), behavior: 'smooth' });
     }
   };
+
+  useEffect(() => {
+    const track = scrollRef.current;
+    if (!track) return;
+
+    const images = track.querySelectorAll('.project-card__img');
+    
+    const handleScroll = () => {
+      images.forEach((img) => {
+        const rect = img.getBoundingClientRect();
+        // Calculate how far the image is from the center of the screen
+        const centerOffset = (rect.left + rect.width / 2) - (window.innerWidth / 2);
+        // Map offset to a background position percentage (parallax effect)
+        const xPos = 50 + (centerOffset / window.innerWidth) * 20;
+        gsap.to(img, { backgroundPosition: `${xPos}% center`, duration: 0.5, ease: 'power2.out' });
+      });
+    };
+
+    track.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // init
+
+    return () => track.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <section className="projects" id="work">

@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
-import Reveal from '../Reveal/Reveal';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import './Contact.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const SERVICES = ['Development', 'Architecture', 'Infrastructure', 'Consulting', 'Research', 'AI / ML'];
 const SOCIAL_LINKS = [
@@ -33,15 +36,60 @@ export default function Contact() {
     }, 1500);
   };
 
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Stagger Left content
+      gsap.fromTo(
+        '.contact__left > *, .contact__channel-link',
+        { opacity: 0, x: -30 },
+        {
+          scrollTrigger: {
+            trigger: '.contact__left',
+            start: 'top 80%',
+            once: true,
+          },
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'all'
+        }
+      );
+
+      // Stagger Right Form fields
+      gsap.fromTo(
+        '.contact__field, .contact__submit',
+        { opacity: 0, x: 30 },
+        {
+          scrollTrigger: {
+            trigger: '.contact__right',
+            start: 'top 80%',
+            once: true,
+          },
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'all'
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="contact" id="contact">
+    <section className="contact" id="contact" ref={sectionRef}>
       <div className="container">
         {/* Section Title */}
         <div className="contact__section-title-card">GET IN TOUCH</div>
         <div className="contact__grid">
           {/* ── Left: Context ── */}
-          <Reveal direction="left" delay={0.1}>
-            <div className="contact__left">
+          <div className="contact__left">
               <h2 className="text-display-md contact__title">
                 LET'S WORK<br />TOGETHER.
               </h2>
@@ -83,11 +131,9 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-          </Reveal>
 
           {/* ── Right: Form ── */}
-          <Reveal direction="right" delay={0.2}>
-            <div className="contact__right">
+          <div className="contact__right">
               <div className="contact__form-card">
                 <form className="contact__form" onSubmit={handleSubmit} id="connection-form">
                   {/* Name + Email */}
@@ -178,7 +224,6 @@ export default function Contact() {
                 </form>
               </div>
             </div>
-          </Reveal>
         </div>
       </div>
     </section>

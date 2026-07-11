@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useTheme } from '../../contexts/ThemeContext';
 import './Navbar.css';
 
@@ -16,14 +17,27 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
 
-  useEffect(() => {
-    // 1. Scroll state for Navbar background
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
 
-    // 2. IntersectionObserver for active section detection
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious();
+    if (latest > 40) {
+      setScrolled(true);
+      if (latest > previous && latest > 150) {
+        setHidden(true);
+        setMenuOpen(false); // Close menu on scroll down
+      } else {
+        setHidden(false);
+      }
+    } else {
+      setScrolled(false);
+      setHidden(false);
+    }
+  });
+
+  useEffect(() => {
+    // IntersectionObserver for active section detection
     // Using IntersectionObserver avoids the offsetTop bug caused by CSS transforms in ScrollCamera
     const observer = new IntersectionObserver(
       (entries) => {
@@ -44,13 +58,21 @@ export default function Navbar() {
     });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       observer.disconnect();
     };
   }, []);
 
   return (
-    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`} id="navbar">
+    <motion.nav 
+      className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`} 
+      id="navbar"
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: '-100%' }
+      }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: 'easeInOut' }}
+    >
       {/* Logo */}
       <a className="navbar__logo text-headline-md" href="#hero">
         <img src="/mylogo.png" alt="Logo" className="navbar__logo-image" />
@@ -95,6 +117,6 @@ export default function Navbar() {
           </a>
         ))}
       </div>
-    </nav>
+    </motion.nav>
   );
 }

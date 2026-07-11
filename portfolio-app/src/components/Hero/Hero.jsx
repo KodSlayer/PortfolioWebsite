@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { useTheme } from '../../contexts/ThemeContext';
 import './Hero.css';
 
@@ -6,6 +7,26 @@ export default function Hero() {
   const { isDark } = useTheme();
   const canvasRef = useRef(null);
   const sceneRef = useRef({});
+  const contentRef = useRef(null);
+
+  // Entrance Stagger Animation
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ['.hero__title-line', '.hero__manifesto'],
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          stagger: 0.15,
+          ease: 'expo.out',
+          delay: 0.2 // Wait for loader
+        }
+      );
+    }, contentRef);
+    return () => ctx.revert();
+  }, []);
 
   useEffect(() => {
     let animId;
@@ -237,7 +258,7 @@ export default function Hero() {
 
       <div className="hero__inner container">
         {/* Left content column */}
-        <div className="hero__content">
+        <div className="hero__content" ref={contentRef}>
 
           <span>  </span>
           {/* Stacked title blocks */}

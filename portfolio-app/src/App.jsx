@@ -10,14 +10,21 @@ import Playground from './components/Playground/Playground';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import ScrollCamera from './components/ScrollCamera/ScrollCamera';
+import Cursor from './components/Cursor/Cursor';
+import PageProgress from './components/PageProgress/PageProgress';
+import useSmoothScroll from './hooks/useSmoothScroll';
 import './styles/index.css';
 import './App.css';
 
 function AppContent() {
+  useSmoothScroll();
   const [loaded, setLoaded] = useState(false);
 
   return (
     <>
+      <Cursor />
+      <PageProgress />
+      <div className="global-bg-gradient" />
       {!loaded && <Loader onComplete={() => setLoaded(true)} />}
       <div className={`app-shell ${loaded ? 'app-shell--visible' : ''}`}>
         <Navbar />
