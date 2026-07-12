@@ -3,30 +3,49 @@ import gsap from 'gsap';
 import { useTheme } from '../../contexts/ThemeContext';
 import './Hero.css';
 
-export default function Hero() {
+export default function Hero({ loaded }) {
   const { isDark } = useTheme();
   const canvasRef = useRef(null);
   const sceneRef = useRef({});
   const contentRef = useRef(null);
 
-  // Entrance Stagger Animation
+  // Initial setup: hide elements immediately with a premium blurred state
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ['.hero__title-line', '.hero__manifesto'],
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          stagger: 0.15,
-          ease: 'expo.out',
-          delay: 0.2 // Wait for loader
-        }
-      );
+      gsap.set(['.hero__title-line', '.hero__manifesto', '.hero__scroll'], { 
+        y: 50, 
+        opacity: 0,
+        filter: 'blur(10px)',
+        scale: 0.96,
+        rotationX: 10
+      });
     }, contentRef);
     return () => ctx.revert();
   }, []);
+
+  // Premium Entrance Stagger Animation
+  useEffect(() => {
+    if (!loaded) return;
+    
+    const ctx = gsap.context(() => {
+      gsap.to(
+        ['.hero__title-line', '.hero__manifesto', '.hero__scroll'],
+        {
+          y: 0,
+          opacity: 1,
+          filter: 'blur(0px)',
+          scale: 1,
+          rotationX: 0,
+          duration: 1.6,
+          stagger: 0.18,
+          ease: 'power4.out',
+          delay: 0.5, // Wait for loader slide-up transition
+          clearProps: 'all'
+        }
+      );
+    }, contentRef);
+    return () => ctx.revert(); // clean up animation if component unmounts
+  }, [loaded]);
 
   useEffect(() => {
     let animId;

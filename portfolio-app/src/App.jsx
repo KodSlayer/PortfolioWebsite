@@ -29,7 +29,7 @@ function AppContent() {
       <div className={`app-shell ${loaded ? 'app-shell--visible' : ''}`}>
         <Navbar />
         <main className="scroll-camera-viewport">
-          <Hero />
+          <Hero loaded={loaded} />
           <ScrollCamera><About /></ScrollCamera>
           <ScrollCamera><Certifications /></ScrollCamera>
           <ScrollCamera><Projects /></ScrollCamera>
