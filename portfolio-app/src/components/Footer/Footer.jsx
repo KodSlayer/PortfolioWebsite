@@ -71,7 +71,7 @@ export default function Footer() {
         <div className="footer__label text-label-sm"></div>
 
         <a
-          className="footer__email text-display-lg"
+          className="footer__email"
           href="mailto:yashasteshi08@gmail.com"
           id="footer-email-link"
         >

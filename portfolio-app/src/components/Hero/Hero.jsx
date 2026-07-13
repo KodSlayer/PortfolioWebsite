@@ -3,11 +3,12 @@ import gsap from 'gsap';
 import { useTheme } from '../../contexts/ThemeContext';
 import './Hero.css';
 
-export default function Hero({ loaded }) {
+export default function Hero() {
   const { isDark } = useTheme();
   const canvasRef = useRef(null);
   const sceneRef = useRef({});
-  const contentRef = useRef(null);
+  const sectionRef = useRef(null);
+  const animStateRef = useRef({ progress: 0 });
 
   // Initial setup: hide elements immediately with a premium blurred state
   useEffect(() => {
@@ -19,15 +20,23 @@ export default function Hero({ loaded }) {
         scale: 0.96,
         rotationX: 10
       });
-    }, contentRef);
+    }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   // Premium Entrance Stagger Animation
   useEffect(() => {
-    if (!loaded) return;
     
     const ctx = gsap.context(() => {
+      // Animate Three.js Network Spawning first
+      gsap.to(animStateRef.current, {
+        progress: 1,
+        duration: 3.5,
+        ease: 'power2.inOut',
+        delay: 0.2 // Starts immediately after loader
+      });
+
+      // Animate Text Entrance (starts when network is ~50-60% formed)
       gsap.to(
         ['.hero__title-line', '.hero__manifesto', '.hero__scroll'],
         {
@@ -39,13 +48,13 @@ export default function Hero({ loaded }) {
           duration: 1.6,
           stagger: 0.18,
           ease: 'power4.out',
-          delay: 0.5, // Wait for loader slide-up transition
+          delay: 2.0, // Delay until network is mostly formed (0.2 + ~1.8s)
           clearProps: 'all'
         }
       );
-    }, contentRef);
+    }, sectionRef);
     return () => ctx.revert(); // clean up animation if component unmounts
-  }, [loaded]);
+  }, []);
 
   useEffect(() => {
     let animId;
@@ -55,6 +64,7 @@ export default function Hero({ loaded }) {
       if (!container) return;
 
       const scene = new THREE.Scene();
+      
       const w = container.clientWidth || window.innerWidth;
       const h = container.clientHeight || window.innerHeight;
 
@@ -109,18 +119,21 @@ export default function Hero({ loaded }) {
       });
 
       let lines;
-      const maxDist = 2.8;
-
+      
       function updateConnections() {
         if (lines) scene.remove(lines);
         const linePositions = [];
         const pos = points.geometry.attributes.position.array;
+        
+        // Connections grow as progress increases
+        const currentMaxDist = 2.8 * animStateRef.current.progress;
+        
         for (let i = 0; i < particleCount; i++) {
           for (let j = i + 1; j < particleCount; j++) {
             const dx = pos[i * 3] - pos[j * 3];
             const dy = pos[i * 3 + 1] - pos[j * 3 + 1];
             const dz = pos[i * 3 + 2] - pos[j * 3 + 2];
-            if (Math.sqrt(dx * dx + dy * dy + dz * dz) < maxDist) {
+            if (Math.sqrt(dx * dx + dy * dy + dz * dz) < currentMaxDist) {
               linePositions.push(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]);
               linePositions.push(pos[j * 3], pos[j * 3 + 1], pos[j * 3 + 2]);
             }
@@ -140,12 +153,13 @@ export default function Hero({ loaded }) {
       function getNeighborNodes(nodeIdx) {
         const pos = points.geometry.attributes.position.array;
         const neighbors = [];
+        // Max distance for lightning is always 2.8 regardless of spawn progress
         for (let j = 0; j < particleCount; j++) {
           if (j === nodeIdx) continue;
           const dx = pos[nodeIdx * 3] - pos[j * 3];
           const dy = pos[nodeIdx * 3 + 1] - pos[j * 3 + 1];
           const dz = pos[nodeIdx * 3 + 2] - pos[j * 3 + 2];
-          if (Math.sqrt(dx * dx + dy * dy + dz * dz) < maxDist) neighbors.push(j);
+          if (Math.sqrt(dx * dx + dy * dy + dz * dz) < 2.8) neighbors.push(j);
         }
         return neighbors;
       }
@@ -225,6 +239,15 @@ export default function Hero({ loaded }) {
 
       function animate(t) {
         animId = requestAnimationFrame(animate);
+        
+        // Dynamically update opacities based on spawn progress
+        if (material) {
+          material.opacity = (isDark ? 0.9 : 0.55) * animStateRef.current.progress;
+        }
+        if (lineMaterial) {
+          lineMaterial.opacity = (isDark ? 0.4 : 0.12) * Math.min(1, animStateRef.current.progress * 1.5);
+        }
+
         points.rotation.y += 0.0008;
         points.rotation.x += 0.0004;
         const pos = points.geometry.attributes.position.array;
@@ -271,13 +294,13 @@ export default function Hero({ loaded }) {
   }, [isDark]);
 
   return (
-    <section className="hero" id="hero">
+    <section className="hero" id="hero" ref={sectionRef}>
       {/* Three.js canvas */}
       <div className="hero__canvas" ref={canvasRef} />
 
       <div className="hero__inner container">
         {/* Left content column */}
-        <div className="hero__content" ref={contentRef}>
+        <div className="hero__content">
 
           <span>  </span>
           {/* Stacked title blocks */}

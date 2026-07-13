@@ -47,7 +47,7 @@
 /* ── Email ── */
 .footer__email {
   font-family: var(--font-mono);
-  font-size: clamp(20px, 3.5vw, 44px);
+  font-size: clamp(16px, 4vw, 36px);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -58,6 +58,7 @@
   border-bottom: 4px solid var(--primary-container);
   transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
   display: inline-block;
+  word-break: break-all;
 }
 
 [data-theme="dark"] .footer__email {

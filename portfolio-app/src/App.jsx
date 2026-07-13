@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
-import Loader from './components/Loader/Loader';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
@@ -18,18 +17,16 @@ import './App.css';
 
 function AppContent() {
   useSmoothScroll();
-  const [loaded, setLoaded] = useState(false);
 
   return (
     <>
       <Cursor />
       <PageProgress />
       <div className="global-bg-gradient" />
-      {!loaded && <Loader onComplete={() => setLoaded(true)} />}
-      <div className={`app-shell ${loaded ? 'app-shell--visible' : ''}`}>
+      <div className="app-shell app-shell--visible">
         <Navbar />
         <main className="scroll-camera-viewport">
-          <Hero loaded={loaded} />
+          <Hero />
           <ScrollCamera><About /></ScrollCamera>
           <ScrollCamera><Certifications /></ScrollCamera>
           <ScrollCamera><Projects /></ScrollCamera>

@@ -77,7 +77,7 @@
   /* Typography */
   --font-display: 'Outfit', sans-serif;
   --font-headline: 'Outfit', sans-serif;
-  --font-body: 'Outfit', sans-serif;
+  --font-body: 'JetBrains Mono', monospace;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Radius */

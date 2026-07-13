@@ -92,14 +92,16 @@
 }
 
 .about-b__bio {
-  font-size: 17px;
+  font-family: var(--font-mono);
+  font-size: 15px;
   line-height: 1.6;
   font-weight: 600;
   margin-bottom: 16px;
 }
 
 .about-b__bio-sub {
-  font-size: 15px;
+  font-family: var(--font-mono);
+  font-size: 13px;
   line-height: 1.6;
   color: var(--on-surface-variant);
   margin-bottom: 32px;

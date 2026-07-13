@@ -281,9 +281,10 @@
 
 /* ── Description ── */
 .project-card__desc {
+  font-family: var(--font-mono);
   color: var(--on-surface-variant);
   line-height: 1.6;
-  font-size: 13px;
+  font-size: 11px;
   margin-bottom: 20px;
   display: -webkit-box;
   -webkit-line-clamp: 3;

@@ -64,10 +64,10 @@ export default function Playground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    
+
     let animationFrameId;
     let isActive = true;
-    
+
     const resize = () => {
       const wrap = canvas.parentElement;
       canvas.width = wrap.clientWidth;
@@ -101,11 +101,11 @@ export default function Playground() {
       const handleKeyDown = (e) => {
         // Prevent default scrolling only if the game is active
         if (dir.x !== 0 || dir.y !== 0) {
-          if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].indexOf(e.code) > -1) {
-              e.preventDefault();
+          if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].indexOf(e.code) > -1) {
+            e.preventDefault();
           }
         }
-  
+
         switch (e.key.toLowerCase()) {
           case 'w':
           case 'arrowup':
@@ -130,13 +130,13 @@ export default function Playground() {
       const resetGame = () => {
         // Limit snake to the left side (avoiding the system log on the right)
         // System log is 280px + 16px right margin = ~300px
-        const safeWidth = Math.max(canvas.width - 320, 200); 
+        const safeWidth = Math.max(canvas.width - 320, 200);
         const maxCol = Math.floor(safeWidth / gridSize);
         const maxRow = Math.floor(canvas.height / gridSize);
-        
-        snake = [{ 
-          x: Math.floor(Math.random() * (maxCol - 4)) + 2, 
-          y: Math.floor(Math.random() * (maxRow - 4)) + 2 
+
+        snake = [{
+          x: Math.floor(Math.random() * (maxCol - 4)) + 2,
+          y: Math.floor(Math.random() * (maxRow - 4)) + 2
         }];
         dir = { x: 0, y: 0 };
         score = 1;
@@ -144,7 +144,7 @@ export default function Playground() {
       };
 
       const spawnFood = () => {
-        const safeWidth = Math.max(canvas.width - 320, 200); 
+        const safeWidth = Math.max(canvas.width - 320, 200);
         const maxCol = Math.floor(safeWidth / gridSize);
         const maxRow = Math.floor(canvas.height / gridSize);
         if (maxCol <= 0 || maxRow <= 0) return;
@@ -158,20 +158,20 @@ export default function Playground() {
 
       const update = () => {
         if (dir.x === 0 && dir.y === 0) return; // Waiting to start
-  
+
         const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
-        
+
         // Boundaries (preventing it from going under the log on the right)
-        const safeWidth = Math.max(canvas.width - 320, 200); 
+        const safeWidth = Math.max(canvas.width - 320, 200);
         const maxCol = Math.floor(safeWidth / gridSize);
         const maxRow = Math.floor(canvas.height / gridSize);
-  
+
         // Wall collision
         if (head.x < 0 || head.x >= maxCol || head.y < 0 || head.y >= maxRow) {
           resetGame();
           return;
         }
-  
+
         // Self collision
         for (let i = 0; i < snake.length; i++) {
           if (snake[i].x === head.x && snake[i].y === head.y) {
@@ -179,9 +179,9 @@ export default function Playground() {
             return;
           }
         }
-  
+
         snake.unshift(head);
-  
+
         // Food collision
         if (head.x === food.x && head.y === food.y) {
           score++;
@@ -196,7 +196,7 @@ export default function Playground() {
         // Clear background
         ctx.fillStyle = isDark ? '#060810' : '#f2f4f6';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
+
         // Grid lines (draw over entire canvas for aesthetic)
         ctx.strokeStyle = isDark ? '#1a2040' : '#d0d4e8';
         ctx.lineWidth = 1;
@@ -218,19 +218,19 @@ export default function Playground() {
         ctx.lineTo(safeBoundary, canvas.height);
         ctx.stroke();
         ctx.setLineDash([]);
-  
+
         // Draw Food (Icon)
         const fX = food.x * gridSize;
         const fY = food.y * gridSize;
         const img = images[food.iconIndex];
-        
+
         // Draw a highly visible box behind the icon
         ctx.fillStyle = '#0066FF';
         ctx.fillRect(fX, fY, gridSize, gridSize);
         if (img.complete && img.naturalHeight !== 0) {
           ctx.drawImage(img, fX + 2, fY + 2, gridSize - 4, gridSize - 4);
         }
-  
+
         // Draw Snake segments
         ctx.fillStyle = isDark ? '#ffffff' : '#000000';
         for (let i = 0; i < snake.length; i++) {
@@ -256,7 +256,7 @@ export default function Playground() {
     else if (activeKernel === 'hacker') {
       let typedIndex = 0;
       addLog('Awaiting keyboard input to compile code.');
-      
+
       const draw = () => {
         ctx.fillStyle = isDark ? '#060810' : '#f2f4f6';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -267,12 +267,12 @@ export default function Playground() {
 
         const text = HACKER_CODE.substring(0, typedIndex);
         const lines = text.split('\n');
-        
+
         let y = 20;
         // Keep scrolling up if it goes beyond canvas height
         const lineHeight = 20;
         if (lines.length * lineHeight > canvas.height - 40) {
-            y = canvas.height - 40 - (lines.length * lineHeight);
+          y = canvas.height - 40 - (lines.length * lineHeight);
         }
 
         lines.forEach(line => {
@@ -287,12 +287,12 @@ export default function Playground() {
         // Exclude system keys like F5, F12 etc so users can refresh
         if (e.key.startsWith('F') || e.ctrlKey || e.altKey || e.metaKey) return;
         e.preventDefault();
-        
+
         typedIndex += Math.floor(Math.random() * 10) + 5;
         if (typedIndex >= HACKER_CODE.length) typedIndex = 0;
-        
+
         if (typedIndex % 200 < 15) {
-          addLog(`Compiling block 0x${Math.floor(Math.random()*9999).toString(16)}...`);
+          addLog(`Compiling block 0x${Math.floor(Math.random() * 9999).toString(16)}...`);
         }
         draw();
       });
@@ -316,7 +316,6 @@ export default function Playground() {
             {/* Header */}
             <div className="playground__header">
               <div className="playground__header-tag">
-                <span className="text-label-sm playground__header-label">03 // PLAYGROUND</span>
                 <h2 className="text-display-md playground__header-title">
                   THE<br /><span style={{ color: 'var(--primary-container)' }}>PLAY<br />GROUND</span>
                 </h2>
@@ -328,7 +327,7 @@ export default function Playground() {
 
             {/* Terminal */}
             <div className="playground__terminal">
-              
+
               {/* Kernel Switcher Chrome */}
               <div className="playground__terminal-chrome">
                 <div className="playground__dots">
@@ -336,7 +335,7 @@ export default function Playground() {
                   <div className="playground__dot playground__dot--yellow" />
                   <div className="playground__dot playground__dot--green" />
                 </div>
-                
+
                 <div className="playground__kernel-tabs">
                   {KERNELS.map(k => (
                     <button
