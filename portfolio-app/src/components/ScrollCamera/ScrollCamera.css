@@ -2,6 +2,27 @@
 .scroll-camera {
   will-change: transform, opacity;
   transform-origin: center top;
-  /* Perspective gives the scale a genuine depth feel */
-  perspective: 1400px;
+  /* Deeper perspective = more cinematic depth illusion */
+  perspective: 1000px;
+  /* Sharp horizontal border-top acts as a scene separator */
+  border-top: 3px solid var(--on-surface);
+  /* Tiny negative margin overlaps sections slightly, giving a stacked-film feel */
+  margin-top: -3px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Highlight the leading edge of each section as it enters */
+.scroll-camera::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-container);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  pointer-events: none;
 }

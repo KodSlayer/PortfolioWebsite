@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { useTheme } from '../../contexts/ThemeContext';
 import './Loader.css';
 
@@ -117,10 +118,17 @@ export default function Loader({ onComplete }) {
         clearInterval(interval);
         setTimeout(() => {
           if (loaderRef.current) {
-            loaderRef.current.style.opacity = '0';
-            loaderRef.current.style.pointerEvents = 'none';
+            gsap.to(loaderRef.current, {
+              yPercent: -100,
+              duration: 1.2,
+              ease: 'expo.inOut',
+              onComplete: () => {
+                onComplete?.();
+              }
+            });
+          } else {
+             onComplete?.();
           }
-          setTimeout(() => onComplete?.(), 800);
         }, 600);
       }
     }, 120);

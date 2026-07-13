@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
 import Reveal from '../Reveal/Reveal';
 import './Projects.css';
 
@@ -51,35 +52,57 @@ export default function Projects() {
     }
   };
 
+  useEffect(() => {
+    const track = scrollRef.current;
+    if (!track) return;
+
+    const images = track.querySelectorAll('.project-card__img');
+    
+    const handleScroll = () => {
+      images.forEach((img) => {
+        const rect = img.getBoundingClientRect();
+        // Calculate how far the image is from the center of the screen
+        const centerOffset = (rect.left + rect.width / 2) - (window.innerWidth / 2);
+        // Map offset to a background position percentage (parallax effect)
+        const xPos = 50 + (centerOffset / window.innerWidth) * 20;
+        gsap.to(img, { backgroundPosition: `${xPos}% center`, duration: 0.5, ease: 'power2.out' });
+      });
+    };
+
+    track.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // init
+
+    return () => track.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section className="projects" id="work">
       {/* Header */}
       <Reveal direction="slice">
         <div className="container">
           <div className="projects__header">
-              <div>
-                <span className="projects__eyebrow">03 // MY PROJECTS</span>
-                <h2 className="projects__title-card">SELECTED WORK.</h2>
-              </div>
-              <div className="projects__nav-btns">
-                <button
-                  className="projects__nav-btn"
-                  onClick={() => scroll(-1)}
-                  aria-label="Previous project"
-                  id="projects-prev-btn"
-                >
-                  <span className="material-symbols-outlined">arrow_back</span>
-                </button>
-                <button
-                  className="projects__nav-btn"
-                  onClick={() => scroll(1)}
-                  aria-label="Next project"
-                  id="projects-next-btn"
-                >
-                  <span className="material-symbols-outlined">arrow_forward</span>
-                </button>
-              </div>
+            <div>
+              <h2 className="projects__title-card">MY PROJECTS.</h2>
             </div>
+            <div className="projects__nav-btns">
+              <button
+                className="projects__nav-btn"
+                onClick={() => scroll(-1)}
+                aria-label="Previous project"
+                id="projects-prev-btn"
+              >
+                <span className="material-symbols-outlined">arrow_back</span>
+              </button>
+              <button
+                className="projects__nav-btn"
+                onClick={() => scroll(1)}
+                aria-label="Next project"
+                id="projects-next-btn"
+              >
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </button>
+            </div>
+          </div>
         </div>
       </Reveal>
 

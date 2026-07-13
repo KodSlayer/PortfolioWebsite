@@ -1,5 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import './Certifications.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const CERTS = [
   {
@@ -65,21 +69,29 @@ export default function Certifications() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.cert__animate').forEach((el, i) => {
-              el.style.transitionDelay = `${i * 0.08}s`;
-              el.classList.add('cert__animate--in');
-            });
-          }
-        });
-      },
-      { threshold: 0.05 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    const ctx = gsap.context(() => {
+      const elements = sectionRef.current.querySelectorAll('.cert__animate');
+      
+      gsap.set(elements, { opacity: 0, y: 32 });
+
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top 75%',
+        once: true,
+        onEnter: () => {
+          gsap.to(elements, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.1,
+            ease: 'expo.out',
+            clearProps: 'all'
+          });
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (

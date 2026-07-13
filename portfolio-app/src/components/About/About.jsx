@@ -1,5 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import './About.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const TECH_STACK = [
   'Python', 'Java', 'FastAPI', 'LangGraph', 'AutoGen', 'LangChain',
@@ -13,24 +17,35 @@ const SKILLS = [
 ];
 
 export default function About() {
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.about__animate').forEach((el, i) => {
-              el.style.transitionDelay = `${i * 0.1}s`;
-              el.classList.add('about__animate--in');
-            });
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    const ctx = gsap.context(() => {
+      // Find all elements with about__animate class
+      const elements = sectionRef.current.querySelectorAll('.about__animate');
+
+      // Set initial state
+      gsap.set(elements, { opacity: 0, y: 32 });
+
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top 75%',
+        once: true,
+        onEnter: () => {
+          gsap.to(elements, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.1,
+            ease: 'expo.out',
+            clearProps: 'all'
+          });
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -70,7 +85,6 @@ export default function About() {
                   ))}
                 </div>
               </div>
-
             </div>
           </div>
 
@@ -106,19 +120,45 @@ export default function About() {
                   <span className="about-b__status-key">SPECIALTY</span>
                   <span className="about-b__status-val">AI & RAG ENABLED SYSTEMS</span>
                 </div>
-                <div className="about-b__status-row">
-                  <span className="about-b__status-key">ARCHITECTURE plan</span>
-                  <span className="about-b__status-val">MULTI-AGENT WORKFLOWS</span>
-                </div>
               </div>
+
+              {/* Resume Actions */}
+              <div className="about-b__resume-actions" style={{ marginTop: '32px' }}>
+                <button onClick={() => setIsResumeOpen(true)} className="about-b__resume-btn">
+                  VIEW RESUME
+                  <span className="material-symbols-outlined" style={{ fontSize: 18 }}>visibility</span>
+                </button>
+                <a href="/YashaasResume.pdf" download="YashaasResume.pdf" className="about-b__resume-btn about-b__resume-btn--primary">
+                  DOWNLOAD
+                  <span className="material-symbols-outlined" style={{ fontSize: 18 }}>download</span>
+                </a>
+              </div>
+
             </div>
-
-
 
           </div>
 
         </div>
       </div>
+
+      {/* Resume Modal */}
+      {isResumeOpen && (
+        <div className="resume-modal" onClick={() => setIsResumeOpen(false)}>
+          <div className="resume-modal__content" onClick={e => e.stopPropagation()}>
+            <div className="resume-modal__header">
+              <span className="resume-modal__title">YASHAAS_RESUME.PDF</span>
+              <button className="resume-modal__close" onClick={() => setIsResumeOpen(false)} aria-label="Close Resume">
+                <span className="material-symbols-outlined" style={{ fontSize: 24 }}>close</span>
+              </button>
+            </div>
+            <iframe 
+              src="/YashaasResume.pdf" 
+              className="resume-modal__iframe"
+              title="Yashaas Resume"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }

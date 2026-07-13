@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
-import Loader from './components/Loader/Loader';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
@@ -10,16 +9,22 @@ import Playground from './components/Playground/Playground';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import ScrollCamera from './components/ScrollCamera/ScrollCamera';
+import Cursor from './components/Cursor/Cursor';
+import PageProgress from './components/PageProgress/PageProgress';
+import ChatAssistant from './components/ChatAssistant/ChatAssistant';
+import useSmoothScroll from './hooks/useSmoothScroll';
 import './styles/index.css';
 import './App.css';
 
 function AppContent() {
-  const [loaded, setLoaded] = useState(false);
+  useSmoothScroll();
 
   return (
     <>
-      {!loaded && <Loader onComplete={() => setLoaded(true)} />}
-      <div className={`app-shell ${loaded ? 'app-shell--visible' : ''}`}>
+      <Cursor />
+      <PageProgress />
+      <div className="global-bg-gradient" />
+      <div className="app-shell app-shell--visible">
         <Navbar />
         <main className="scroll-camera-viewport">
           <Hero />
@@ -31,6 +36,7 @@ function AppContent() {
         </main>
         <Footer />
       </div>
+      <ChatAssistant />
     </>
   );
 }
