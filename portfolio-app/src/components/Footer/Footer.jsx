@@ -10,7 +10,6 @@ const SOCIAL_LINKS = [
   { label: 'GITHUB', icon: <FaGithub size={24} />, href: 'https://github.com/KodSlayer' },
   { label: 'LINKEDIN', icon: <FaLinkedin size={24} />, href: 'https://www.linkedin.com/in/yashaas-m-267108324/' },
   { label: 'INSTAGRAM', icon: <FaInstagram size={24} />, href: '#' },
-  { label: 'FACEBOOK', icon: <FaFacebook size={24} />, href: '#' },
   { label: 'TWITTER', icon: <FaTwitter size={24} />, href: '#' },
   { label: 'WHATSAPP', icon: <FaWhatsapp size={24} />, href: '#' },
 ];

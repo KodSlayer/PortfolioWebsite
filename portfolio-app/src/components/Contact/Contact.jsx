@@ -90,140 +90,128 @@ export default function Contact() {
         <div className="contact__grid">
           {/* ── Left: Context ── */}
           <div className="contact__left">
-              <h2 className="text-display-md contact__title">
-                LET'S WORK<br />TOGETHER.
-              </h2>
-              <p className="text-body-lg contact__subtitle">
-                Have a project in mind or want to explore how AI can power your next product?
-                Drop me a message — I'm currently open to new opportunities.
-              </p>
+            <h2 className="text-display-md contact__title">
+              LET'S WORK<br />TOGETHER.
+            </h2>
+            <p className="text-body-lg contact__subtitle">
+              Have a project in mind or want to explore how AI can power your next product?
+              Drop me a message — I'm currently open to new opportunities.
+            </p>
 
-              {/* Status Indicator */}
-              <div className="contact__status">
-                <div className="contact__status-dot">
-                  <div className="contact__status-pulse" />
-                  <div className="contact__status-inner" />
-                </div>
-                <div>
-                  <p className="text-label-md contact__status-label">Availability</p>
-                  <p className="text-label-sm contact__status-value">OPEN TO WORK </p>
-                </div>
-              </div>
-
-              {/* Secure Channels */}
-              <div className="contact__channels">
-                <h3 className="text-headline-md contact__channels-title">FIND ME ON</h3>
-                <div className="contact__channels-grid">
-                  {SOCIAL_LINKS.map(link => (
-                    <a
-                      key={link.label}
-                      className="contact__channel-link"
-                      href={link.href}
-                      id={`social-${link.label.toLowerCase().replace(/[\s()]/g, '-')}-link`}
-                    >
-                      <div className="contact__channel-left">
-                        <span className="material-symbols-outlined contact__channel-icon">{link.icon}</span>
-                        <span className="text-label-md contact__channel-label">{link.label}</span>
-                      </div>
-                      <span className="material-symbols-outlined contact__channel-arrow">arrow_forward</span>
-                    </a>
-                  ))}
-                </div>
+            {/* Secure Channels */}
+            <div className="contact__channels">
+              <h3 className="text-headline-md contact__channels-title">FIND ME ON</h3>
+              <div className="contact__channels-grid">
+                {SOCIAL_LINKS.map(link => (
+                  <a
+                    key={link.label}
+                    className="contact__channel-link"
+                    href={link.href}
+                    id={`social-${link.label.toLowerCase().replace(/[\s()]/g, '-')}-link`}
+                  >
+                    <div className="contact__channel-left">
+                      <span className="material-symbols-outlined contact__channel-icon">{link.icon}</span>
+                      <span className="text-label-md contact__channel-label">{link.label}</span>
+                    </div>
+                    <span className="material-symbols-outlined contact__channel-arrow">arrow_forward</span>
+                  </a>
+                ))}
               </div>
             </div>
+          </div>
 
           {/* ── Right: Form ── */}
           <div className="contact__right">
-              <div className="contact__form-card">
-                <form className="contact__form" onSubmit={handleSubmit} id="connection-form">
-                  {/* Name + Email */}
-                  <div className="contact__form-row">
-                    <div className="contact__field">
-                      <label className="text-label-sm contact__label" htmlFor="client_id">
-                        Identifier [NAME]
-                      </label>
-                      <input
-                        className="contact__input"
-                        id="client_id"
-                        type="text"
-                        placeholder="Your Name"
-                        required
-                      />
-                    </div>
-                    <div className="contact__field">
-                      <label className="text-label-sm contact__label" htmlFor="client_email">
-                        Uplink [EMAIL]
-                      </label>
-                      <input
-                        className="contact__input"
-                        id="client_email"
-                        type="email"
-                        placeholder="name@domain.com"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  {/* Services */}
+            <div className="contact__form-card">
+              <form className="contact__form" onSubmit={handleSubmit} id="connection-form">
+                {/* Name + Email */}
+                <div className="contact__form-row">
                   <div className="contact__field">
-                    <label className="text-label-sm contact__label">Parameters [SERVICE]</label>
-                    <div className="contact__services">
-                      {SERVICES.map(s => (
-                        <button
-                          key={s}
-                          type="button"
-                          className={`contact__service-chip text-label-md ${selected.includes(s) ? 'contact__service-chip--active' : ''}`}
-                          onClick={() => toggleService(s)}
-                        >
-                          {s}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Message */}
-                  <div className="contact__field">
-                    <label className="text-label-sm contact__label" htmlFor="packet_payload">
-                      Payload [MESSAGE]
+                    <label className="text-label-sm contact__label" htmlFor="client_id">
+                      Identifier [NAME]
                     </label>
-                    <textarea
-                      className="contact__input contact__textarea"
-                      id="packet_payload"
-                      rows={5}
-                      placeholder="Describe the project scope or technical requirements..."
+                    <input
+                      className="contact__input"
+                      id="client_id"
+                      type="text"
+                      placeholder="Your Name"
                       required
                     />
                   </div>
+                  <div className="contact__field">
+                    <label className="text-label-sm contact__label" htmlFor="client_email">
+                      Uplink [EMAIL]
+                    </label>
+                    <input
+                      className="contact__input"
+                      id="client_email"
+                      type="email"
+                      placeholder="name@domain.com"
+                      required
+                    />
+                  </div>
+                </div>
 
-                  {/* Submit */}
-                  <button
-                    className={`contact__submit btn-primary ${status !== 'idle' ? 'contact__submit--loading' : ''}`}
-                    type="submit"
-                    disabled={status !== 'idle'}
-                    id="submit-connection-btn"
-                  >
-                    {status === 'idle' && (
-                      <>
-                        START CONNECTION
-                        <span className="material-symbols-outlined" style={{ fontSize: 18 }}>send</span>
-                      </>
-                    )}
-                    {status === 'sending' && (
-                      <>
-                        <span className="contact__spinner" />
-                        SYNCHRONIZING...
-                      </>
-                    )}
-                    {status === 'done' && (
-                      <>
-                        <span className="material-symbols-outlined" style={{ fontSize: 18 }}>check_circle</span>
-                        HANDSHAKE COMPLETE
-                      </>
-                    )}
-                  </button>
-                </form>
-              </div>
+                {/* Services */}
+                <div className="contact__field">
+                  <label className="text-label-sm contact__label">Parameters [SERVICE]</label>
+                  <div className="contact__services">
+                    {SERVICES.map(s => (
+                      <button
+                        key={s}
+                        type="button"
+                        className={`contact__service-chip text-label-md ${selected.includes(s) ? 'contact__service-chip--active' : ''}`}
+                        onClick={() => toggleService(s)}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div className="contact__field">
+                  <label className="text-label-sm contact__label" htmlFor="packet_payload">
+                    Payload [MESSAGE]
+                  </label>
+                  <textarea
+                    className="contact__input contact__textarea"
+                    id="packet_payload"
+                    rows={5}
+                    placeholder="Describe the project scope or technical requirements..."
+                    required
+                  />
+                </div>
+
+                {/* Submit */}
+                <button
+                  className={`contact__submit btn-primary ${status !== 'idle' ? 'contact__submit--loading' : ''}`}
+                  type="submit"
+                  disabled={status !== 'idle'}
+                  id="submit-connection-btn"
+                >
+                  {status === 'idle' && (
+                    <>
+                      START CONNECTION
+                      <span className="material-symbols-outlined" style={{ fontSize: 18 }}>send</span>
+                    </>
+                  )}
+                  {status === 'sending' && (
+                    <>
+                      <span className="contact__spinner" />
+                      SYNCHRONIZING...
+                    </>
+                  )}
+                  {status === 'done' && (
+                    <>
+                      <span className="material-symbols-outlined" style={{ fontSize: 18 }}>check_circle</span>
+                      HANDSHAKE COMPLETE
+                    </>
+                  )}
+                </button>
+              </form>
             </div>
+          </div>
         </div>
       </div>
     </section>

@@ -11,6 +11,7 @@ import Footer from './components/Footer/Footer';
 import ScrollCamera from './components/ScrollCamera/ScrollCamera';
 import Cursor from './components/Cursor/Cursor';
 import PageProgress from './components/PageProgress/PageProgress';
+import ChatAssistant from './components/ChatAssistant/ChatAssistant';
 import useSmoothScroll from './hooks/useSmoothScroll';
 import './styles/index.css';
 import './App.css';
@@ -35,6 +36,7 @@ function AppContent() {
         </main>
         <Footer />
       </div>
+      <ChatAssistant />
     </>
   );
 }
