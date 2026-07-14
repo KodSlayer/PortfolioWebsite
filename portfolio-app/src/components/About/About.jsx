@@ -6,12 +6,13 @@ import './About.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const TECH_STACK = [
-  'Python', 'Java', 'FastAPI', 'LangGraph', 'AutoGen', 'LangChain',
-  'ChromaDB', 'PostgreSQL', 'Docker', 'AWS', 'Azure'
+  'Python', 'FastAPI', 'LangGraph', 'LangChain',
+  'Vector DBs', 'LLMs', 'RAG',
+  'ChromaDB', 'PostgreSQL', 'Docker', 'mcp servers', 'Computer Vision', 'version control', 'React.js'
 ];
 
 const SKILLS = [
-  'Python / Java', 'FastAPI / REST', 'LangGraph / AutoGen', 'LangChain',
+  'Python', 'FastAPI / REST', 'LangGraph / AutoGen', 'LangChain',
   'RAG Pipelines', 'ChromaDB', 'PostgreSQL', 'Docker', 'AWS / Azure',
   'Git & GitHub', 'Postman API Testing', 'HTML/CSS/JS',
 ];
@@ -151,8 +152,8 @@ export default function About() {
                 <span className="material-symbols-outlined" style={{ fontSize: 24 }}>close</span>
               </button>
             </div>
-            <iframe 
-              src="/YashaasResume.pdf" 
+            <iframe
+              src="/YashaasResume.pdf"
               className="resume-modal__iframe"
               title="Yashaas Resume"
             />
