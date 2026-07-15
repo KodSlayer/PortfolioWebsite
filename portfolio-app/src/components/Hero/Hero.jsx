@@ -83,8 +83,8 @@ export default function Hero() {
       const positions = new Float32Array(particleCount * 3);
       const colors = new Float32Array(particleCount * 3);
 
-      const c1 = new THREE.Color(isDark ? 0xffffff : 0x000000);
-      const c2 = new THREE.Color(isDark ? 0x0066ff : 0x0066ff);
+      const c1 = new THREE.Color(isDark ? 0xffffff : 0x0066ff);
+      const c2 = new THREE.Color(0x0066ff);
 
       for (let i = 0; i < particleCount; i++) {
         positions[i * 3] = (Math.random() - 0.5) * 18;
@@ -100,11 +100,11 @@ export default function Hero() {
       geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
       const material = new THREE.PointsMaterial({
-        size: isDark ? 0.12 : 0.08,
+        size: 0.12,
         vertexColors: true,
         transparent: true,
-        opacity: isDark ? 0.9 : 0.55,
-        blending: THREE.AdditiveBlending,
+        opacity: isDark ? 0.9 : 0.85,
+        blending: isDark ? THREE.AdditiveBlending : THREE.NormalBlending,
       });
 
       const points = new THREE.Points(geometry, material);
@@ -113,15 +113,18 @@ export default function Hero() {
 
       // Connection lines
       const lineMaterial = new THREE.LineBasicMaterial({
-        color: isDark ? 0x0066FF : 0x191c1e,
+        color: 0x0066FF,
         transparent: true,
-        opacity: isDark ? 0.4 : 0.12,
+        opacity: 0.7,
       });
 
       let lines;
       
       function updateConnections() {
-        if (lines) scene.remove(lines);
+        if (lines) {
+          scene.remove(lines);
+          lines.geometry.dispose();
+        }
         const linePositions = [];
         const pos = points.geometry.attributes.position.array;
         
@@ -170,7 +173,7 @@ export default function Hero() {
           color: isDark ? 0x00d1ff : 0x0066ff,
           transparent: true,
           opacity: 1.0,
-          blending: THREE.AdditiveBlending,
+          blending: isDark ? THREE.AdditiveBlending : THREE.NormalBlending,
         });
         const orb = new THREE.Mesh(pulseGeo, mat);
         const haloGeo = new THREE.SphereGeometry(0.22, 10, 10);
@@ -178,7 +181,7 @@ export default function Hero() {
           color: isDark ? 0x0066ff : 0x000000,
           transparent: true,
           opacity: 0.3,
-          blending: THREE.AdditiveBlending,
+          blending: isDark ? THREE.AdditiveBlending : THREE.NormalBlending,
         });
         const halo = new THREE.Mesh(haloGeo, haloMat);
         orb.add(halo);
@@ -242,10 +245,10 @@ export default function Hero() {
         
         // Dynamically update opacities based on spawn progress
         if (material) {
-          material.opacity = (isDark ? 0.9 : 0.55) * animStateRef.current.progress;
+          material.opacity = (isDark ? 0.9 : 0.85) * animStateRef.current.progress;
         }
         if (lineMaterial) {
-          lineMaterial.opacity = (isDark ? 0.4 : 0.12) * Math.min(1, animStateRef.current.progress * 1.5);
+          lineMaterial.opacity = 0.7 * Math.min(1, animStateRef.current.progress * 1.5);
         }
 
         points.rotation.y += 0.0008;
@@ -278,10 +281,24 @@ export default function Hero() {
         window.removeEventListener('resize', handleResize);
         activePulses.forEach(p => {
           scene.remove(p.orb);
+          p.orb.geometry.dispose();
           p.orb.material.dispose();
           if (p.haloMat) p.haloMat.dispose();
         });
         activePulses.length = 0;
+        
+        if (lines) {
+          scene.remove(lines);
+          lines.geometry.dispose();
+        }
+        lines = null;
+
+        scene.remove(points);
+        points.geometry.dispose();
+        points.material.dispose();
+        lineMaterial.dispose();
+        pulseGeo.dispose();
+
         renderer.dispose();
         if (container.contains(renderer.domElement)) container.removeChild(renderer.domElement);
       };
