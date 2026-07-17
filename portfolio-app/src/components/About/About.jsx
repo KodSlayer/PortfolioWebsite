@@ -6,8 +6,7 @@ import './About.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const TECH_STACK = [
-  'Python', 'FastAPI', 'LangGraph', 'LangChain',
-  'Vector DBs', 'LLMs', 'RAG', 'PostgreSQL', 'Docker', 'mcp servers', 'Computer Vision', 'version control', 'React.js'
+  'Python', 'FastAPI', 'LangGraph', 'LangChain', 'Vector DBs', 'LLMs', 'RAG', 'PostgreSQL', 'Docker', 'mcp servers', 'Computer Vision', 'version control', 'React.js'
 ];
 
 const SKILLS = [
