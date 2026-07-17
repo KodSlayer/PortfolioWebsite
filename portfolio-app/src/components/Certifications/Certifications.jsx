@@ -12,7 +12,7 @@ const CERTS = [
     issuer: 'Anthropic',
     date: '2024',
     credId: 'ANTHROPIC-CERT',
-    verifyUrl: '/Clause_with_API.pdf',
+    verifyUrl: 'https://verify.skilljar.com/c/gth5mnz4srxt',
     badge: '/Claude_API.png',
   },
   {
@@ -21,7 +21,7 @@ const CERTS = [
     issuer: 'Anthropic',
     date: '2024',
     credId: 'ANTHROPIC-CERT',
-    verifyUrl: '/ClaudeCode_in_Action.pdf',
+    verifyUrl: 'https://verify.skilljar.com/c/jkh4nruo7tqm',
     badge: '/ClaudeCode.png',
   },
   {
@@ -30,7 +30,7 @@ const CERTS = [
     issuer: 'Anthropic',
     date: '2024',
     credId: 'ANTHROPIC-CERT',
-    verifyUrl: '/Introduction_to_MCP.pdf',
+    verifyUrl: 'https://verify.skilljar.com/c/4e2jbi3tb8hz',
     badge: '/Intro_to_mcp.png',
   },
   {
@@ -39,7 +39,7 @@ const CERTS = [
     issuer: 'Anthropic',
     date: '2024',
     credId: 'ANTHROPIC-CERT',
-    verifyUrl: '/Introductio_to_agentic_skills.pdf',
+    verifyUrl: 'https://verify.skilljar.com/c/vrjwinjovb9s',
     badge: '/Intro_to_agentic_skills.png',
   },
   {
@@ -48,7 +48,7 @@ const CERTS = [
     issuer: 'Anthropic',
     date: '2024',
     credId: 'ANTHROPIC-CERT',
-    verifyUrl: '/Introductio_to_Subagents.pdf',
+    verifyUrl: 'https://verify.skilljar.com/c/tsj9nr3qv22e',
     badge: '/Intro_to_subagents.png',
   },
   {
@@ -57,7 +57,7 @@ const CERTS = [
     issuer: 'Anthropic',
     date: '2024',
     credId: 'ANTHROPIC-CERT',
-    verifyUrl: '/AI_fluency_framework.pdf',
+    verifyUrl: 'https://verify.skilljar.com/c/utvhesphfcsf',
     badge: '/AI_fluency.png',
   },
   {
@@ -66,7 +66,7 @@ const CERTS = [
     issuer: 'Anthropic',
     date: '2024',
     credId: 'ANTHROPIC-CERT',
-    verifyUrl: '/ClaudeCode_101.pdf',
+    verifyUrl: 'https://verify.skilljar.com/c/hn3ms8cpvkaz',
     badge: '/ClaudeCode_101.png',
   },
   {
@@ -75,7 +75,7 @@ const CERTS = [
     issuer: 'Anthropic',
     date: '2024',
     credId: 'ANTHROPIC-CERT',
-    verifyUrl: '/Claude_101.pdf',
+    verifyUrl: 'https://verify.skilljar.com/c/hn3ms8cpvkaz',
     badge: '/Claude_101.png',
   },
 ];
@@ -140,12 +140,12 @@ export default function Certifications() {
 
         {/* Sticky Scroll Gallery */}
         <div className="cert__gallery">
-          
+
           {/* Left: Sticky Visual Frame (Desktop only) */}
           <div className="cert__sticky-col">
             <div className="cert__sticky-frame">
               {CERTS.map((cert, idx) => (
-                <div 
+                <div
                   key={`img-${cert.id}`}
                   className={`cert__sticky-img-wrap ${idx === activeIndex ? 'is-active' : ''}`}
                 >
@@ -165,11 +165,11 @@ export default function Certifications() {
           {/* Right: Scrolling Text List */}
           <div className="cert__scroll-col">
             {CERTS.map((cert, idx) => (
-              <div 
-                className={`cert__text-block ${idx === activeIndex ? 'is-active' : ''}`} 
+              <div
+                className={`cert__text-block ${idx === activeIndex ? 'is-active' : ''}`}
                 key={`text-${cert.id}`}
               >
-                
+
                 {/* Mobile visual (hidden on desktop, shows inside the text block) */}
                 <div className="cert__mobile-visual">
                   {cert.badge ? (
