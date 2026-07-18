@@ -1,0 +1,54 @@
+{
+    "skillsync_descripton": "SkillSync Project Analysis
+Overview
+SkillSync is an AI-powered Career Trajectory & Resume Analyzer. It helps users understand their career paths, analyze their resumes, identify skill gaps, and match with suitable jobs based on their profiles. The application utilizes a modern tech stack with a Next.js frontend, a FastAPI backend, and an intelligent agentic workflow powered by LangGraph and LLMs.
+
+🏗️ Architecture & Technologies Used
+The project is structured into two main components—Frontend and Backend—both orchestrated via Docker Compose along with a PostgreSQL database.
+
+1. Frontend (User Interface)
+The frontend is a modern, responsive web application built to interact with the backend APIs and display real-time AI workflows.
+
+Framework: Next.js 14 & React 18
+Language: TypeScript for type-safe code.
+Styling: Tailwind CSS for rapid and modern UI development.
+Icons & Visualizations: lucide-react for iconography and recharts for data visualization.
+Key Features:
+Resume upload interface.
+Real-time Server-Sent Events (SSE) handling to stream AI workflow progress live to the user (in workflowApi.ts).
+Human-in-the-loop interactions (e.g., approving/resuming workflows).
+2. Backend (API & Business Logic)
+The backend is a robust Python-based API server that handles data persistence, file processing, and orchestrates the AI agents.
+
+Framework: FastAPI for building fast, asynchronous APIs.
+Database: PostgreSQL 15 (containerized), managed via SQLAlchemy ORM.
+Core Libraries:
+PyMuPDF for parsing and extracting text from uploaded PDF resumes.
+pydantic for data validation and schema definitions.
+python-multipart for handling file uploads.
+Key Features:
+Endpoints for Authentication, Admin Dashboard, Resumes, Workflows, and an AI Chatbot.
+Database tables for User, ResumeData, CareerTrajectory, JobMatch, and Agent_ChatHistory (found in tables.py).
+3. AI & Agentic Workflow (The "Brain")
+The core intelligence of SkillSync runs on an agentic workflow architecture.
+
+Orchestration Framework: LangGraph to build stateful, multi-actor LLM applications.
+LLM Provider: Groq using the meta-llama/llama-4-scout-17b-16e-instruct model for fast, high-quality inference.
+Search APIs: SerpApi and Tinyfish API for real-time internet searches (e.g., finding current job postings).
+Workflow Nodes:
+Profile Node: Parses the resume and extracts a structured candidate profile.
+Trajectory Node: Analyzes the profile and generates a career milestone plan.
+Hunter Node: Uses search tools to find real job matches, calculate match scores, and identify skill gaps.
+4. Infrastructure & Deployment
+Docker & Docker Compose: The entire application can be spun up seamlessly using docker-compose.yml. It defines three services:
+db: The PostgreSQL database with persistent volume storage.
+backend: The FastAPI application server.
+frontend: The Next.js UI server.
+Networking: A custom Docker bridge network (skillsync-network) allows secure communication between the frontend, backend, and database.
+⚙️ Core Application Flow
+User Onboarding & Upload: A user creates an account and uploads their resume (PDF).
+Parsing & Profile Generation: The backend receives the PDF, extracts the text using PyMuPDF, and passes it to the Profile Node in the LangGraph workflow to structure the candidate's data.
+Human-in-the-Loop: The frontend streams this workflow via SSE. The user can review the parsed profile and approve it.
+Career Trajectory & Job Hunting: Upon approval, the workflow resumes. The Trajectory Node charts out career milestones, and the Hunter Node searches the web for actual job postings that match the profile in the specified location.
+Insights & Analytics: The frontend displays the career trajectory, matched jobs with "match scores", and highlights "skill gaps" so the user knows what to learn next. Users can also interact with the AI Chatbot to ask specific career-related questions."
+}

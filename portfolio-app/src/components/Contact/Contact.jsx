@@ -10,7 +10,7 @@ const SOCIAL_LINKS = [
   { icon: 'terminal', label: 'GitHub', href: 'https://github.com/KodSlayer' },
   { icon: 'share', label: 'LinkedIn', href: 'https://www.linkedin.com/in/yashaas-m-267108324/' },
   { icon: 'mail', label: 'Email', href: 'mailto:yashasteshi08@gmail.com' },
-  { icon: 'call', label: 'Phone', href: 'tel:+917892343265' },
+  { icon: 'forum', label: 'WhatsApp', href: 'https://wa.me/7892343265' },
 ];
 
 export default function Contact() {
@@ -23,17 +23,44 @@ export default function Contact() {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
-    setTimeout(() => {
-      setStatus('done');
-      setTimeout(() => {
+
+    try {
+      const formData = new FormData(e.target);
+      
+      // Use the access key from environment variables (or placeholder if missing)
+      formData.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE");
+      
+      if (selected.length > 0) {
+        formData.append("services", selected.join(", "));
+      }
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus('done');
+        setTimeout(() => {
+          setStatus('idle');
+          e.target.reset();
+          setSelected([]);
+        }, 3000);
+      } else {
+        console.error("Form error:", data);
         setStatus('idle');
-        e.target.reset();
-        setSelected([]);
-      }, 3000);
-    }, 1500);
+        alert("Failed to send message: " + data.message);
+      }
+    } catch (error) {
+      console.error("Submit error:", error);
+      setStatus('idle');
+      alert("An error occurred. Please try again later.");
+    }
   };
 
   const sectionRef = useRef(null);
@@ -108,6 +135,8 @@ export default function Contact() {
                     className="contact__channel-link"
                     href={link.href}
                     id={`social-${link.label.toLowerCase().replace(/[\s()]/g, '-')}-link`}
+                    target={link.href.startsWith('http') ? "_blank" : undefined}
+                    rel={link.href.startsWith('http') ? "noopener noreferrer" : undefined}
                   >
                     <div className="contact__channel-left">
                       <span className="material-symbols-outlined contact__channel-icon">{link.icon}</span>
@@ -133,6 +162,7 @@ export default function Contact() {
                     <input
                       className="contact__input"
                       id="client_id"
+                      name="name"
                       type="text"
                       placeholder="Your Name"
                       required
@@ -145,6 +175,7 @@ export default function Contact() {
                     <input
                       className="contact__input"
                       id="client_email"
+                      name="email"
                       type="email"
                       placeholder="name@domain.com"
                       required
@@ -177,6 +208,7 @@ export default function Contact() {
                   <textarea
                     className="contact__input contact__textarea"
                     id="packet_payload"
+                    name="message"
                     rows={5}
                     placeholder="Describe the project scope or technical requirements..."
                     required

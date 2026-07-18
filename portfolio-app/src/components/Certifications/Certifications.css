@@ -132,15 +132,33 @@
 .cert__scroll-col {
   flex: 1;
   display: flex;
-  flex-direction: column;
-  gap: 40px; /* space between text blocks on mobile */
+  flex-direction: row;
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 24px;
+  margin: 0 -20px;
+  padding: 0 20px 24px 20px;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.cert__scroll-col::-webkit-scrollbar {
+  display: none;
 }
 
 @media (min-width: 1024px) {
   .cert__scroll-col {
+    flex-direction: column;
+    overflow-x: visible;
+    overflow-y: visible;
+    scroll-snap-type: none;
+    margin: 0;
+    padding: 25vh 0 50vh 0;
     gap: 0;
-    padding-bottom: 50vh; /* allow last item to reach center */
-    padding-top: 25vh; /* Perfectly aligns first item with the pinned image */
   }
 }
 
@@ -152,6 +170,8 @@
   padding: 24px;
   transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
   position: relative;
+  flex: 0 0 85%;
+  scroll-snap-align: center;
 }
 
 [data-theme="dark"] .cert__text-block {
@@ -160,6 +180,8 @@
 
 @media (min-width: 1024px) {
   .cert__text-block {
+    flex: auto;
+    scroll-snap-align: none;
     opacity: 0.3;
     transform: translateX(30px);
     margin-bottom: 25vh; /* large gap between items to enforce scrolling */

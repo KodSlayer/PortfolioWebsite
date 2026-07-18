@@ -235,10 +235,23 @@ export default function Hero() {
       }
 
       const mouse = new THREE.Vector2();
-      window.addEventListener('mousemove', (e) => {
+      
+      const handleMouseMove = (e) => {
         mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-      });
+      };
+
+      const handleDeviceOrientation = (e) => {
+        if (e.gamma !== null && e.beta !== null) {
+          let x = e.gamma / 45;
+          let y = (e.beta - 45) / 45;
+          mouse.x = Math.max(-1, Math.min(1, x));
+          mouse.y = -Math.max(-1, Math.min(1, y));
+        }
+      };
+
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('deviceorientation', handleDeviceOrientation);
 
       function animate(t) {
         animId = requestAnimationFrame(animate);
@@ -279,6 +292,8 @@ export default function Hero() {
       sceneRef.current.cleanup = () => {
         cancelAnimationFrame(animId);
         window.removeEventListener('resize', handleResize);
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('deviceorientation', handleDeviceOrientation);
         activePulses.forEach(p => {
           scene.remove(p.orb);
           p.orb.geometry.dispose();
