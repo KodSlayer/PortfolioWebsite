@@ -78,6 +78,13 @@ export default function ChatWindow() {
 
   return (
     <div className="chat-widget-container">
+      {/* Floating Action Button Tooltip */}
+      {!isOpen && !hasInteracted && (
+        <div className="chat-fab-tooltip" onClick={() => setIsOpen(true)}>
+          <span>ASK AI ASSISTANT</span>
+        </div>
+      )}
+
       {/* Floating Action Button */}
       <button
         className={`chat-fab ${isOpen ? 'chat-fab--open' : ''}`}
