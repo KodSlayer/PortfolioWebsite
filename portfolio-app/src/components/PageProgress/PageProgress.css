@@ -1,0 +1,12 @@
+/* PageProgress.css */
+
+.page-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary-container); /* use a primary accent color */
+  transform-origin: 0%;
+  z-index: 10000; /* above everything including cursor and navbar */
+}
