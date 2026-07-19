@@ -39,10 +39,24 @@
   gap: 64px;
 }
 
+.about-b__left {
+  order: 2;
+}
+
+.about-b__right {
+  order: 1;
+}
+
 @media (min-width: 1024px) {
   .about-b__grid {
     grid-template-columns: 1fr 380px;
     align-items: start;
+  }
+  .about-b__left {
+    order: 1;
+  }
+  .about-b__right {
+    order: 2;
   }
 }
 

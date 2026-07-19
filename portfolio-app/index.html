@@ -22,9 +22,21 @@
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/mylogo.png" />
 
-  <!-- Prevent theme flash -->
+  <!-- Prevent theme flash and disable scroll restoration -->
   <script>
     (function () {
+      // Force manual scroll restoration
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      // Scroll to top immediately
+      window.scrollTo(0, 0);
+      
+      // Also scroll to top right before reload
+      window.addEventListener('beforeunload', function() {
+        window.scrollTo(0, 0);
+      });
+
       const saved = localStorage.getItem('portfolio-theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const theme = saved || (prefersDark ? 'dark' : 'light');

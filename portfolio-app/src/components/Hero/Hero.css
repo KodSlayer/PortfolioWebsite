@@ -296,4 +296,12 @@
   .hero__title-line {
     font-size: clamp(40px, 10vw, 64px);
   }
+
+  .hero__title-line--label {
+    font-size: 16px;
+    color: var(--on-surface);
+    -webkit-text-stroke: 0;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
 }

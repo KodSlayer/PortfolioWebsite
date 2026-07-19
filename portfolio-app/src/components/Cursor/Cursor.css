@@ -6,7 +6,7 @@
   top: 0;
   left: 0;
   pointer-events: none;
-  z-index: 9999; /* Ensure it stays above everything */
+  z-index: 999999; /* Ensure it stays above everything including chat window */
   border-radius: 50%;
   mix-blend-mode: difference;
 }
@@ -14,13 +14,13 @@
 .custom-cursor-dot {
   width: 8px;
   height: 8px;
-  background-color: var(--on-surface);
+  background-color: #fff;
 }
 
 .custom-cursor-ring {
   width: 32px;
   height: 32px;
-  border: 1px solid var(--on-surface);
+  border: 2px solid #fff;
   transition: background-color 0.2s, border-color 0.2s;
 }
 
