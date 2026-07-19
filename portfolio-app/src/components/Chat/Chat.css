@@ -50,6 +50,37 @@
   transform: rotate(90deg);
 }
 
+/* ── FAB Speech Bubble Alert ── */
+.chat-fab-tooltip {
+  position: absolute;
+  right: 15px;
+  bottom: 75px; /* Positioned directly above the FAB */
+  background: var(--surface);
+  color: var(--on-surface);
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 2px solid var(--on-surface);
+  /* Speech bubble shape: rounded top and left, sharp bottom-right pointing to the FAB */
+  border-radius: 12px 12px 0 12px; 
+  box-shadow: 4px 4px 0 var(--primary-container);
+  animation: speechBounce 2s ease-in-out infinite;
+  transform-origin: bottom right;
+}
+
+.chat-fab-tooltip:hover {
+  box-shadow: 6px 6px 0 var(--primary-container);
+}
+
+@keyframes speechBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.02); }
+}
+
 /* ── Chat Window Modal ── */
 .chat-window {
   position: absolute;
