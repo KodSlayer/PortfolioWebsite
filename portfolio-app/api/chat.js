@@ -11,19 +11,19 @@ export default async function handler(req, res) {
     }
 
     const payload = {
-      model: process.env.LLM_DEPLOYMENT || 'meta-llama/llama-4-scout-17b-16e-instruct',
+      model: process.env.VITE_LLM_DEPLOYMENT || 'meta-llama/llama-4-scout-17b-16e-instruct',
       messages: messages,
       temperature: temperature,
       max_tokens: max_tokens,
     };
 
-    const endpoint = process.env.LLM_ENDPOINT || 'https://api.groq.com/openai/v1';
+    const endpoint = process.env.VITE_LLM_ENDPOINT || 'https://api.groq.com/openai/v1';
 
     const response = await fetch(`${endpoint}/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.LLM_API_KEY}`
+        'Authorization': `Bearer ${process.env.VITE_LLM_API_KEY}`
       },
       body: JSON.stringify(payload)
     });
@@ -36,7 +36,7 @@ export default async function handler(req, res) {
 
     const data = await response.json();
     return res.status(200).json(data);
-    
+
   } catch (error) {
     console.error('Serverless Error:', error);
     return res.status(500).json({ error: 'Internal server error' });
